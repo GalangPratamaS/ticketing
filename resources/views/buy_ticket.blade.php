@@ -181,7 +181,7 @@
              
                   <div class="card-body ticketitem" id="ticket_box">
                     <div class="notif_ticket" ></div>
-                    <div class="ticketing" v-for="ticket in tickets" :key="ticket.id">
+                    <div class="ticket" v-for="ticket in tickets" :key="ticket.id">
                       <div class="items">
                       <p class="ticket-title">@{{ ticket.ticket_name  }}</p>  <br>
                     
@@ -783,7 +783,7 @@
                 const tanggal = { tanggal: day.id };
                           axios.post('{{ route('ticket') }}',tanggal)
                               .then((response)=>{
-                                $('.ticketitem').show(); 
+                                $('.ticket').show(); 
                                  
                                 this.tickets = response.data.data;
                                 console.log(response.data.data);
@@ -797,9 +797,9 @@
                               //   });
                               })
                               .catch((error) => {
-                                // $('.ticketing').remove(); 
+                                // $('.ticket').remove(); 
                                 // $('.ticketitem').remove(); 
-                                $('.ticketing').hide(); 
+                                $('.ticket').hide(); 
 
                                 $('.notif_ticket').append('<h3 class="text-muted">Ticket tidak tersedia</h3>');
                                 $(".all_qty span").html("0");
