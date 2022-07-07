@@ -104,7 +104,7 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                       var price = parseFloat(el.parent().children(".price").val());
 
                       //   console.log(qt);
-                      //   console.log(price);
+                        // console.log(price);
                       var eq = Math.round(price * qt * 100) / 100;
 
                       el.parent().children(".full-price").val(eq);
@@ -114,31 +114,35 @@ $(document.body).on('click', 'button.btn-number', function(e) {
 
                   function changeTotal() {
 
-                      var price = 0;
+                      var prices = 0;
                       var qty = 0;
                       var cc = 0;
 
                       $(".full-price").each(function (index) {
 
-                          price += parseFloat($(".full-price").eq(index).val());
+                          prices += parseFloat($(".full-price").eq(index).val());
                       });
 
                       $(".qt").each(function (index) {
                           qty += parseFloat($(".qt").eq(index).val());
                       });
 
-                      price = Math.round(price * 100) / 100;
+                      console.log('harga'+ prices +"Qty" + qty);
+                      
+                      prices = Math.round(prices * 100) / 100;
 
-                      var fullPrice = parseFloat(price);
+                    //   console.log('harga'+ price +"Qty" + qty);
 
-                      if (price == 0) {
+                      var fullPrice = parseFloat(prices);
+
+                      if (prices == 0) {
                           fullPrice = 0;
                       }
                       cc = fullPrice * 0.03;
 
                       $('#credit_card').val(cc);
                       $('#total_price').val(fullPrice);
-                    //   console.log('biaya cc = ' + cc);
+                      console.log('biaya cc = ' + cc);
 
 
                       $(".all_qty span").html(qty);
