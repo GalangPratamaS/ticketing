@@ -178,112 +178,13 @@
                 
 
                 <div class="card mt-2" style="width: 100%; margin: 20px;">
-                  <!-- <div class="card-header"></div> -->
-                  {{-- <table>
-                    <tr>
-                      <td>Nama tiket</td>
-                      <td>harga</td>
-                    </tr>
-                    <tr v-for="ticket in tickets" :key="ticket.id">
-                      <td>{{ ticket.ticket_name }}</td>
-                      <td>{{ ticket.ticket_price }}</td>
-                    </tr>
-                  </table> --}}
+             
                   <div class="card-body ticketitem" id="ticket_box">
-                    <div class="items">
-                    <p class="ticket-title">Tiket Wahana Rumah Hantu Weekday</p>  <br>
                     
-                    <!-- <input type="hidden" class="price" name="ticket_price[1]" value="30000"> -->
-                                       
-                    
-                    <p class="ticket-description"> <i class="bi bi-clock"></i> 17 Agustus 2022 , 16.00 - 22.00 WIB  </p>
-                    <div class="readmore">
-                      <p class="ticket-description">Syarat dan ketentuan</p>
-                      <ol>
-                        <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li>
-                        <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li>
-                        <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li>
-                        <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li>
-                      </ol>
-                    </div>
-                    
-
-                    <br>
-                    <div class="d-flex flex-row-reverse bd-highlight">
-                      <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;">
-                        <div class="input-group input-group-sm">
-                        <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled"
-                          data-type="minus" data-field="quant[1]">
-                          <i class='bx bx-minus'></i>
-                        </button>
-                        <input type="text" name="quant[1]" class="form-control input-sm input-number qt" value="0" min="0"
-                          max="10">
-                        <input type="hidden" name="id_ticket[1]" value="tkt1">
-                        <input type="hidden" name="price[1]" class="input-number price" value="300000">
-                        <input type="hidden" name="fullprice[1]" class="input-number full-price" value="0">
-                        <button class="btn btn-outline-primary btn-number" data-type="plus" data-field="quant[1]">
-                          <i class='bx bx-plus'></i>
-                        </button>
-                      </div>
-                      </div>
-                       <div class="p-2 bd-highlight showButton" id="show_button" style="display:none;"><button id="btn_add" class="btn btn-primary ml-2">Tambah</button></div>
-                       <div class="p-2 bd-highlight"><p class="mr-2">Rp.30.000 </p> </div>                      
-                    </div>
- 
-                    </div>
-
-                    <hr>
-
-                    <div class="items">
-                      <p class="ticket-title">Tiket Wahana Rumah Hantu Weekend</p>  <br>
-                    
-                    <!-- <input type="hidden" class="price" name="ticket_price[1]" value="30000"> -->
-                                       
-                    
-                    <p class="ticket-description"> <i class="bi bi-clock"></i> 17 Agustus 2022 , 16.00 - 22.00 WIB  </p>
-                    <div class="readmore">
-                      <p class="ticket-description">Syarat dan ketentuan</p>
-                      <ol>
-                        <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li>
-                        <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li>
-                        <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li>
-                        <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li>
-                      </ol>
-                    </div>
-                    
-                    
-                    <div class="d-flex flex-row-reverse bd-highlight">
-                      <div class="p-2 bd-highlight qtyControl" style="width: 115px !important; ">
-                        <div class="input-group input-group-sm">
-                        <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled"
-                          data-type="minus" data-field="quant[2]">
-                          <i class='bx bx-minus'></i>
-                        </button>
-                        <input type="hidden" name="id_ticket[2]" value="tkt2">
-                        <input type="text" name="quant[2]" class="form-control input-sm input-number qt" value="0" min="0"
-                          max="10">
-                        <input type="hidden" name="price[2]" class="form-control input-sm input-number price" value="400000">
-                        <input type="hidden" name="fullprice[2]" class="form-control input-sm input-number full-price" value="0">
-                        <button class="btn btn-outline-primary btn-number" data-type="plus" data-field="quant[2]">
-                          <i class='bx bx-plus'></i>
-                        </button>
-                      </div>
-                      </div>
-                       <div class="p-2 bd-highlight showButton" style="display:none;"><button class="btn_add btn btn-primary ml-2">Tambah</button></div>
-                       <div class="p-2 bd-highlight"><p class="mr-2">Rp.40.000 </p> </div>                      
-                    </div>
-                    </div>
-
-                  
+                                    
 
                   </div>
-
-                  {{-- <hr> --}}
-
-                   {{-- <div class="card-body">
-                    
-
-                  </div> --}}
+                  
 
                   <div class="card-footer">
                     <div class="d-flex bd-highlight">    
@@ -311,8 +212,8 @@
                       <input type="email" name="cust_email" class="form-control" id="inputEmail4">
                     </div>                    
                     <div class="col-12">
-                      <label for="inputAddress" class="form-label">Nomor Handphone</label>
-                      <input type="phone" name="cust_phone" class="form-control" id="inputAddress" placeholder="08129323121">
+                      <label for="phoneNumber" class="form-label">Nomor Handphone</label>
+                      <input type="number" name="cust_phone" class="form-control" id="phoneNumber" placeholder="08129323121">
                     </div>
                     <div class="col-6">
                       <label for="namaDepan" class="form-label">Nama Depan</label>
@@ -766,7 +667,6 @@
   
 
   <!-- Vendor JS Files -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js" integrity="sha512-x/vqovXY/Q4b+rNjgiheBsA/vbWA3IVvsS8lkQSX1gQ4ggSJx38oI2vREZXpTzhAv6tNUaX81E7QBBzkpDQayA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="{{ asset('vendor/purecounter/purecounter_vanilla.js') }}"></script>
   <script src="{{ asset('vendor/aos/aos.js') }}"></script>
   <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -802,45 +702,7 @@
          
        }); 
        </script> 
-       {{-- BETA SCRIPT DATE GALANG --}}
-       <script>   
-       
-      // $(document).ready(function () {
-      //   showTicket('2022-08-18');
-      // });
-
-      //   function showTicket(date){
-
-      //     $('.ticketitem').empty();
-      //      $.ajaxSetup({
-      //        headers : {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')}
-      //     })
-          
-      //     $.ajax({
-      //         url: "{{ route('ticket') }}",
-      //         type: 'POST',
-      //         data: {
-      //             tanggal: date
-      //         },
-      //         cache: false,
-      //         dataType: 'json',
-      //         success: function (result) {
-      //             // var obj = JSON.parse(result);
-      //             var datas = result.data; //datas prop is an array
-      //             for (var i = 0; i < datas.length; i++) {
-      //                 console.log(datas[i].ticket_name);
-
-      //                 // $('.ticketitem').append('<div class="card-body"> <div class="items"> <p class="ticket-title">Tiket Wahana Rumah Hantu Weekday</p> <br> <!-- <input type="hidden" class="price" name="ticket_price[1]" value="30000"> --> <p class="ticket-description"> <i class="bi bi-clock"></i> 17 Agustus 2022 , 16.00 - 22.00 WIB </p> <div class="readmore"> <p class="ticket-description">Syarat dan ketentuan</p> <ol> <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li> <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li> <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li> <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li> </ol> </div> <br> <div class="d-flex flex-row-reverse bd-highlight"> <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;"> <div class="input-group input-group-sm"> <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled" data-type="minus" data-field="quant[1]"> <i class="bx bx-minus"></i> </button> <input type="text" name="quant[1]" class="form-control input-sm input-number qt" value="0" min="0" max="10"> <input type="hidden" name="id_ticket[1]" value="tkt1"> <input type="hidden" name="price[1]" class="input-number price" value="300000"> <input type="hidden" name="fullprice[1]" class="input-number full-price" value="0"> <button class="btn btn-outline-primary btn-number" data-type="plus" data-field="quant[1]"> <i class="bx bx-plus"></i> </button> </div> </div> <div class="p-2 bd-highlight showButton" id="show_button" style="display:none;"><button id="btn_add" class="btn btn-primary ml-2">Tambah</button></div> <div class="p-2 bd-highlight"><p class="mr-2">Rp.30.000 </p> </div> </div> </div> </div> <hr>')
-      //             }
-      //             // console.log(result);
-      //         }
-
-      //     });
-        
-                   
-      //   }
-
-        </script>
+     
        <script>
         // axios vue
            new Vue({
@@ -865,27 +727,29 @@
                }, 
                //test script on select date!
               methods: {
-                //  moment: function () {
-                //     return moment();
-                //   }
+               
                 onDayClick(day) {
                 const idx = this.days.findIndex(d => d.id === day.id);    
-                const element = document.getElementById('#item_tiket');
+                // const element = document.getElementById('#item_tiket');
                 const tanggal = { tanggal: day.id };
                           axios.post('{{ route('ticket') }}',tanggal)
                               .then((response)=>{
-
-                                console.log(JSON.stringify(response));
-                              //  $('.ticketitem').html('<div class="items"> <p class="ticket-title">Tiket Wahana Rumah Hantu Weekday</p> <br> <!-- <input type="hidden" class="price" name="ticket_price[1]" value="30000"> --> <p class="ticket-description"> <i class="bi bi-clock"></i> 17 Agustus 2022 , 16.00 - 22.00 WIB </p> <div class="readmore"> <p class="ticket-description">Syarat dan ketentuan</p> <ol> <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li> <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li> <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li> <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li> </ol> </div> <br> <div class="d-flex flex-row-reverse bd-highlight"> <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;"> <div class="input-group input-group-sm"> <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled" data-type="minus" data-field="quant[1]"> <i class="bx bx-minus"></i> </button> <input type="text" name="quant[1]" class="form-control input-sm input-number qt" value="0" min="0" max="10"> <input type="hidden" name="id_ticket[1]" value="tkt1"> <input type="hidden" name="price[1]" class="input-number price" value="300000"> <input type="hidden" name="fullprice[1]" class="input-number full-price" value="0"> <button class="btn btn-outline-primary btn-number" data-type="plus" data-field="quant[1]"> <i class="bx bx-plus"></i> </button> </div> </div> <div class="p-2 bd-highlight showButton" id="show_button" style="display:none;"><button id="btn_add" class="btn btn-primary ml-2">Tambah</button></div> <div class="p-2 bd-highlight"><p class="mr-2">Rp.30.000 </p> </div> </div> </div> <hr>');
-                                // element.innerHTML = response.data.data;
+                                this.tickets = response.data;
+                                console.log(response.data);
+                               $('.ticketitem').html('<div class="items"> <p class="ticket-title">Tiket Wahana Rumah Hantu Weekday</p> <br> <!-- <input type="hidden" class="price" name="ticket_price[1]" value="30000"> --> <p class="ticket-description"> <i class="bi bi-clock"></i> 17 Agustus 2022 , 16.00 - 22.00 WIB </p> <div class="readmore"> <p class="ticket-description">Syarat dan ketentuan</p> <ol> <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li> <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li> <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li> <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li> </ol> </div> <br> <div class="d-flex flex-row-reverse bd-highlight"> <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;"> <div class="input-group input-group-sm"> <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled" data-type="minus" data-field="quant[1]"> <i class="bx bx-minus"></i> </button> <input type="text" name="quant[1]" class="form-control input-sm input-number qt" value="0" min="0" max="10"> <input type="hidden" name="id_ticket[1]" value="tkt1"> <input type="hidden" name="price[1]" class="input-number price" value="300000"> <input type="hidden" name="fullprice[1]" class="input-number full-price" value="0"> <button class="btn btn-outline-primary btn-number" data-type="plus" data-field="quant[1]"> <i class="bx bx-plus"></i> </button> </div> </div> <div class="p-2 bd-highlight showButton" id="show_button" style="display:none;"><button id="btn_add" class="btn btn-primary ml-2">Tambah</button></div> <div class="p-2 bd-highlight"><p class="mr-2">Rp.30.000 </p> </div> </div> </div> <hr> <div class="items"> <p class="ticket-title">Tiket Wahana Rumah Hantu Weekday</p> <br> <!-- <input type="hidden" class="price" name="ticket_price[2]" value="25000"> --> <p class="ticket-description"> <i class="bi bi-clock"></i> 17 Agustus 2022 , 16.00 - 22.00 WIB </p> <div class="readmore"> <p class="ticket-description">Syarat dan ketentuan</p> <ol> <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li> <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li> <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li> <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li> </ol> </div> <br> <div class="d-flex flex-row-reverse bd-highlight"> <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;"> <div class="input-group input-group-sm"> <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled" data-type="minus" data-field="quant[2]"> <i class="bx bx-minus"></i> </button> <input type="text" name="quant[2]" class="form-control input-sm input-number qt" value="0" min="0" max="10"> <input type="hidden" name="id_ticket[2]" value="tkt2"> <input type="hidden" name="price[2]" class="input-number price" value="250000"> <input type="hidden" name="fullprice[2]" class="input-number full-price" value="0"> <button class="btn btn-outline-primary btn-number" data-type="plus" data-field="quant[2]"> <i class="bx bx-plus"></i> </button> </div> </div> <div class="p-2 bd-highlight showButton" id="show_button" style="display:none;"><button id="btn_add" class="btn btn-primary ml-2">Tambah</button></div> <div class="p-2 bd-highlight"><p class="mr-2">Rp.30.000 </p> </div> </div> </div> <hr>');
+                              //   // element.innerHTML = response.data.data;
                                 
                               //  console.log(response.data.data);
-                               $('.readmore').expander({
-                                    slicePoint: 50
-                                });
+                              //  $('.readmore').expander({
+                              //       slicePoint: 50
+                              //   });
                               })
                               .catch((error) => {
-                                  console.log(error); //Logs a string: Error: Request failed with status code 400/401/404
+                                 $('.ticketitem').html('<h3 class="text-muted">Ticket tidak tersedia</h3>');
+                                  $(".all_qty span").html("0");
+                                  $(".total span").html("Total tiket Rp.0");
+                                  $("#btn_payment").prop('disabled', true);
+                                  // console.log(error); //Logs a string: Error: Request failed with status code 400/401/404
                                 });
                                       
                 // alert(day.id);
