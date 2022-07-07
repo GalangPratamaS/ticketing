@@ -95,7 +95,7 @@ class TicketingController extends Controller
 
        $data = DB::table('ticket_sale_date')
             ->leftJoin('tickets', 'tickets.id', '=', 'ticket_sale_date.ticket_id')
-            ->select('tickets.*') 
+            ->select('tickets.*', 'ticket_sale_date.ticket_date') 
             ->where('ticket_sale_date.ticket_date',$request->tanggal)        
             ->get();
         

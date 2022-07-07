@@ -9,9 +9,11 @@ class JsonFormatter {
     ];
 
     public static function createApi($code = null, $message = null, $data = null){
+        
+        self::$response['data'] = $data;
         self::$response['code'] = $code;
         self::$response['message'] = $message;
-        self::$response['data'] = $data;
+        
 
         return response()->json(self::$response, self::$response['code']);        
     }

@@ -105,7 +105,7 @@ $(document.body).on('click', 'button.btn-number', function(e) {
 
                       //   console.log(qt);
                       //   console.log(price);
-                      var eq = Math.round(price * qt * 100) / 1000;
+                      var eq = Math.round(price * qt * 100) / 100;
 
                       el.parent().children(".full-price").val(eq);
 
@@ -138,7 +138,7 @@ $(document.body).on('click', 'button.btn-number', function(e) {
 
                       $('#credit_card').val(cc);
                       $('#total_price').val(fullPrice);
-                      console.log('biaya cc = ' + cc);
+                    //   console.log('biaya cc = ' + cc);
 
 
                       $(".all_qty span").html(qty);
@@ -150,7 +150,7 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                             if (this.checked) {
                                         
                                 var total_harga;            
-                                console.log('admin adalah ' + this.value);            
+                                // console.log('admin adalah ' + this.value);            
                                 $(".admin_fee span").html("Biaya admin Rp."+ this.value);
                                 total_harga = parseFloat($('#total_price').val()) + parseFloat(this.value);
                                 $(".grand span").html("Grand total Rp."+ total_harga);
