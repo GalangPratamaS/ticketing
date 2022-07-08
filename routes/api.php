@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('ticket', [TicketingController::class,'index']);
 Route::post('ticket/date', [TicketingController::class,'showTicketFilter'])->name('ticket');
+Route::post('ticket/order', [TicketingController::class,'reserveTicket'])->name('pesanticket');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

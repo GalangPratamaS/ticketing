@@ -166,9 +166,7 @@
                 
               </div>
               <div class="card-body d-flex align-items-center flex-column mb-3 panel_ticket" id="panel_ticket">
-                <div style="
-    font-weight: bold;     
-    color: rgb(51, 51, 51);">Pilih tanggal kedatanganmu</div> <br>
+                  <div style="font-weight: bold; color: rgb(51, 51, 51);">Pilih tanggal kedatanganmu</div> <br>
                 <v-date-picker @dayclick="onDayClick" :locale="{ id: 'id',  masks: { weekdays: 'WWW' } }" :model-config="modelConfig" mode="date" title-position="left" color="blue" :min-date='new Date(2022,7,17)' :max-date='new Date(2022, 8, 30),' v-model='selectedDate' >
                    
                 </v-date-picker>        
@@ -180,6 +178,7 @@
                 <div class="card mt-2" style="width: 100%; margin: 20px;">
              
                   <div class="card-body ticketitem" id="ticket_box">
+                    
                     <div class="notif_ticket" ></div>
                     <div class="ticket" v-for="ticket in tickets" :key="ticket.id">
                       <div class="items">
@@ -205,7 +204,7 @@
                       <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;">
                         <div class="input-group input-group-sm">
                         <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled"
-                          data-type="minus" :data-field="'quant['+ticket.id+']'">
+                          data-type="minus" :data-ticket="ticket.ticket_name" :data-id-ticket="ticket.id" :data-field="'quant['+ticket.id+']'">
                           <i class="bx bx-minus"></i>
                         </button>
                         <input type="text" :name="'quant['+ticket.id+']'" class="form-control input-sm input-number qt" value="0" min="0"
@@ -213,7 +212,7 @@
                         <input type="hidden" :name="'id_ticket['+ticket.id+']'" :value="ticket.id">
                         <input type="hidden" :name="'price['+ticket.id+']'" class="input-number price" :value="ticket.ticket_price">
                         <input type="hidden" :name="'fullprice['+ticket.id+']'" class="input-number full-price" value="0">
-                        <button class="btn btn-outline-primary btn-number" data-type="plus" :data-field="'quant['+ticket.id+']'">
+                        <button class="btn btn-outline-primary btn-number" data-type="plus" :data-ticket="ticket.ticket_name" :data-id-ticket="ticket.id" :data-field="'quant['+ticket.id+']'">
                           <i class="bx bx-plus"></i>
                         </button>
                       </div>
@@ -225,17 +224,14 @@
  
                     </div>
                   </div>
-
                               
-
-                  </div>
-                  
+                  </div>                  
 
                   <div class="card-footer">
                     <div class="d-flex bd-highlight">    
                       <input type="hidden" name="total_price" id="total_price" value=""> 
                       <div class="p-2 flex-grow-1 bd-highlight all_qty">Subtotal (<span style="font-style: italic;"></span> Tiket)</div>
-                      <div class="p-2 bd-highlight total"> <span> Rp. </span></div>
+                      <div class="p-2 bd-highlight total"> Rp.<span>  </span></div>
                       <div class="p2 bd-highlight"><button class="btn btn-primary" id="btn_payment" disabled="disabled">Beli Tiket</button></div>
                     </div>                                            
                   </div>
@@ -245,13 +241,32 @@
                 
                 <!-- payment chanel view -->
                 <div class="card-body" id="payment_panel" class="payment_panel" style="display: none">
-                  <h3>Ringkasan Pembelian</h3>
+                  <h6 class="text-primary mb-2">Ringkasan Pembelian</h6>
+                  <form class="" method="post" @submit.prevent="beliTiket"> </form>
+                  <div class="ticket_selected">
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6"><p class="text-black">Tiket Rumah hantu weekday</p></div>                      
+                      <div class="col-md-2 col-sm-2"><p class="text-black">x 2</p></div>
+                      <div class="col-md-4 col-sm-4"><p class="text-black"></p></div>
+                    </div>
+                    <div class="row">
+                      <p class="ticket-description"> <i class="bi bi-clock"></i> 2 Juli 2022 , 16.00 - 22.00 WIB  </p>
+                    </div>
 
-                  <div class="description">Informasi Pembeli</div>
+                  </div>
+
+                  <div class="summary">
+                    <p class="all_qty">Subtotal : (<span></span>) Tiket</p>                    
+                    <h6 class="text-black total">Total Rp. <span></span></h6>
+                  </div>
+
+                  <hr>
+
+                  <h6 class="text-primary">Informasi Pembeli</h6>
                   
                   <hr>
 
-                  <form class="row g-3">
+                  <div class="row g-3">
                     <div class="col-md-12">
                       <label for="inputEmail4" class="form-label">Email</label>
                       <input type="email" name="cust_email" class="form-control" id="inputEmail4">
@@ -294,7 +309,7 @@
                         </label>
                       </div>
                     </div>                   
-                  </form>
+                  </div>
 
                   <div class="card-footer">
                     <div class="d-flex flex-row bd-highlight">     
@@ -303,7 +318,7 @@
                     </div>                                            
                   </div>
                 </div>
-
+                
                 <!-- end payment chanel  -->
 
                 <div class="card-body" id="panel_payment2" style="display: none;">
@@ -358,7 +373,7 @@
                 <div class="card-footer">
                    <div class="d-flex justify-content-between bd-highlight">     
                       <div class="p-2 flex-grow-1 bd-highlight all_qty">Subtotal (<span style="font-style: italic;"></span> Tiket)</div>
-                      <div class="p-2 bd-highlight total"> <span style="font-style: bold;">Total tiket Rp.</span></div>
+                      <div class="p-2 bd-highlight total">Total tiket Rp. <span style="font-style: bold;">Total tiket Rp.</span></div>
                       
                     </div>
                     <div class="d-flex justify-content-end bd-highlight">
@@ -751,13 +766,25 @@
        <script>
         // axios vue
            new Vue({
-           
+
                el: '#app',
                data() {
                    const now = new Date(2022, 7, 17)
                    const later = new Date(2022, 8, 30)
                    return {
-                       tickets : {},
+                       form: {
+                           fname: '',
+                           lname: '',
+                           email: '',
+                           gender: '',
+                           phone: '',
+                           ticket: [],
+                           qty: [],
+                           price: [],
+                           terms: '',
+                           payment: '',
+                       },
+                       tickets: {},
                        days: [],
                        selectedDate: null,
                        availableDates: [{
@@ -769,48 +796,55 @@
                            mask: 'DD-MM-YYYY', // Uses 'iso' if missing
                        },
                    }
-               }, 
+               },
                //test script on select date!
-              methods: {
-               
-                onDayClick(day) {
-                const idx = this.days.findIndex(d => d.id === day.id); 
-                 $('.notif_ticket').empty();
-                 $(".all_qty span").html("0");
-                 $(".total span").html("Total tiket Rp.0");
-                 $("#btn_payment").prop('disabled', true);
-                // const element = document.getElementById('#item_tiket');
-                const tanggal = { tanggal: day.id };
-                          axios.post('{{ route('ticket') }}',tanggal)
-                              .then((response)=>{
-                                $('.ticket').show(); 
-                                 
-                                this.tickets = response.data.data;
-                                console.log(response.data.data);
+               methods: {
+                   onDayClick(day) {
+                       const idx = this.days.findIndex(d => d.id === day.id);
+                       $('.notif_ticket').empty();
+                       $(".all_qty span").html("0");
+                       $(".total span").html("Total tiket Rp.0");
+                       $("#btn_payment").prop('disabled', true);
+                       // const element = document.getElementById('#item_tiket');
+                       const tanggal = {
+                           tanggal: day.id
+                       };
+                       axios.post('{{ route("ticket") }}', tanggal)
+                           .then((response) => {
+                               $('.ticket').show();
 
-                              //  $('.ticketitem').html('<div class="items"> <p class="ticket-title">Tiket Wahana Rumah Hantu Weekday</p> <br> <!-- <input type="hidden" class="price" name="ticket_price[1]" value="30000"> --> <p class="ticket-description"> <i class="bi bi-clock"></i> 17 Agustus 2022 , 16.00 - 22.00 WIB </p> <div class="readmore"> <p class="ticket-description">Syarat dan ketentuan</p> <ol> <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li> <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li> <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li> <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li> </ol> </div> <br> <div class="d-flex flex-row-reverse bd-highlight"> <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;"> <div class="input-group input-group-sm"> <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled" data-type="minus" data-field="quant[1]"> <i class="bx bx-minus"></i> </button> <input type="text" name="quant[1]" class="form-control input-sm input-number qt" value="0" min="0" max="10"> <input type="hidden" name="id_ticket[1]" value="tkt1"> <input type="hidden" name="price[1]" class="input-number price" value="300000"> <input type="hidden" name="fullprice[1]" class="input-number full-price" value="0"> <button class="btn btn-outline-primary btn-number" data-type="plus" data-field="quant[1]"> <i class="bx bx-plus"></i> </button> </div> </div> <div class="p-2 bd-highlight showButton" id="show_button" style="display:none;"><button id="btn_add" class="btn btn-primary ml-2">Tambah</button></div> <div class="p-2 bd-highlight"><p class="mr-2">Rp.30.000 </p> </div> </div> </div> <hr> <div class="items"> <p class="ticket-title">Tiket Wahana Rumah Hantu Weekday</p> <br> <!-- <input type="hidden" class="price" name="ticket_price[2]" value="25000"> --> <p class="ticket-description"> <i class="bi bi-clock"></i> 17 Agustus 2022 , 16.00 - 22.00 WIB </p> <div class="readmore"> <p class="ticket-description">Syarat dan ketentuan</p> <ol> <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li> <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li> <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li> <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li> </ol> </div> <br> <div class="d-flex flex-row-reverse bd-highlight"> <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;"> <div class="input-group input-group-sm"> <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled" data-type="minus" data-field="quant[2]"> <i class="bx bx-minus"></i> </button> <input type="text" name="quant[2]" class="form-control input-sm input-number qt" value="0" min="0" max="10"> <input type="hidden" name="id_ticket[2]" value="tkt2"> <input type="hidden" name="price[2]" class="input-number price" value="250000"> <input type="hidden" name="fullprice[2]" class="input-number full-price" value="0"> <button class="btn btn-outline-primary btn-number" data-type="plus" data-field="quant[2]"> <i class="bx bx-plus"></i> </button> </div> </div> <div class="p-2 bd-highlight showButton" id="show_button" style="display:none;"><button id="btn_add" class="btn btn-primary ml-2">Tambah</button></div> <div class="p-2 bd-highlight"><p class="mr-2">Rp.30.000 </p> </div> </div> </div> <hr>');
-                              //   // element.innerHTML = response.data.data;
-                                
-                              //  console.log(response.data.data);
-                              //  $('.readmore').expander({
-                              //       slicePoint: 50
-                              //   });
-                              })
-                              .catch((error) => {
-                                // $('.ticket').remove(); 
-                                // $('.ticketitem').remove(); 
-                                $('.ticket').hide(); 
+                               this.tickets = response.data.data;
+                               console.log(response.data.data);
 
-                                $('.notif_ticket').append('<h3 class="text-muted">Ticket tidak tersedia</h3>');
-                                $(".all_qty span").html("0");
-                                  $(".total span").html("Total tiket Rp.0");
-                                  $("#btn_payment").prop('disabled', true);
-                                  // console.log(error); //Logs a string: Error: Request failed with status code 400/401/404
+
+                                $('.readmore').expander({
+                                    slicePoint: 50
                                 });
-                                      
-                // alert(day.id);
-              },
-            }
+                             
+                           })
+                           .catch((error) => {
+                               
+                               $('.ticket').hide();
+
+                               $('.notif_ticket').append('<h3 class="text-muted">Ticket tidak tersedia</h3>');
+                               $(".all_qty span").html("0");
+                               $(".total span").html("Total tiket Rp.0");
+                               $("#btn_payment").prop('disabled', true);
+                           });
+                   },
+
+                   submitForm() {
+                       axios.post('{{ route("pesanticket") }}', this.form)
+                           .then((res) => {
+                               //Perform Success Action
+                           })
+                           .catch((error) => {
+                               // error.response.status Check status code
+                           }).finally(() => {
+                               //Perform action in always
+                           });
+                   }
+               }
            })
     </script>
 

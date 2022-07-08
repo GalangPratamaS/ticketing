@@ -3,16 +3,18 @@ $(document.body).on('click', 'button.btn-number', function(e) {
     e.preventDefault();
 
                       fieldName = $(this).attr('data-field');
+                      ticketName = $(this).attr('data-ticket');
+                      ticketId = $(this).attr('data-id-ticket');
                       type = $(this).attr('data-type');
                       var input = $("input[name='" + fieldName + "']");
                       var currentVal = parseInt(input.val());
                       if (!isNaN(currentVal)) {
                           if (type == 'minus') {
-
                               if (currentVal > input.attr('min')) {
                                   input.val(currentVal - 1).change();
                               }
                               if (parseInt(input.val()) == input.attr('min')) {
+                                //kalau tiket yg dipilih kurang dari 1 atau = 0
                                   $(this).attr('disabled', true);
                               }
 
@@ -146,7 +148,7 @@ $(document.body).on('click', 'button.btn-number', function(e) {
 
 
                       $(".all_qty span").html(qty);
-                      $(".total span").html("Total tiket Rp." + fullPrice);
+                      $(".total span").html(fullPrice);
                         }
 
                     $('input:radio[name="payment_method"]').on('change',

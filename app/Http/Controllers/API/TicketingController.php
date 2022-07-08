@@ -106,6 +106,11 @@ class TicketingController extends Controller
         }
     }
 
+    public function reserveTicket(Request $request)
+    {
+        
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
