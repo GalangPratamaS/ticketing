@@ -242,7 +242,7 @@
                 <!-- payment chanel view -->
                 <div class="card-body" id="payment_panel" class="payment_panel" style="display: none">
                   <h6 class="text-primary mb-2">Ringkasan Pembelian</h6>
-                  <form class="" method="post" @submit.prevent="beliTiket"> </form>
+                  <form class="" method="post" v-on:submit.prevent="pesanTicket">
                   <div class="ticket_selected">
                     <div class="row">
                       <div class="col-md-6 col-sm-6"><p class="text-black">Tiket Rumah hantu weekday</p></div>                      
@@ -269,32 +269,32 @@
                   <div class="row g-3">
                     <div class="col-md-12">
                       <label for="inputEmail4" class="form-label">Email</label>
-                      <input type="email" name="cust_email" class="form-control" id="inputEmail4">
+                      <input type="email" v-model="form.cust_email" class="form-control" id="inputEmail4">
                     </div>                    
                     <div class="col-12">
                       <label for="phoneNumber" class="form-label">Nomor Handphone</label>
-                      <input type="number" name="cust_phone" class="form-control" id="phoneNumber" placeholder="08129323121">
+                      <input type="number" v-model="form.cust_phone" class="form-control" id="phoneNumber" placeholder="08129323121">
                     </div>
                     <div class="col-6">
                       <label for="namaDepan" class="form-label">Nama Depan</label>
-                      <input type="text" name="cust_firstname" class="form-control" id="namaDepan"
+                      <input type="text" v-model="form.cust_firstname" class="form-control" id="namaDepan"
                         placeholder="Nama Depan">
                     </div>
                     <div class="col-6">
                       <label for="namaBelakang" class="form-label">Nama Belakang</label>
-                      <input type="text" name="cust_lastname" class="form-control" id="namaBelakang"
+                      <input type="text" v-model="form.cust_lastname" class="form-control" id="namaBelakang"
                         placeholder="Nama Belakang">
                     </div>
                    <div class="col-md-12">
                      <label for="Jenis Kelamin" class="form-label">Jenis Kelamin</label>
                      <div class="form-check">
-                       <input class="form-check-input" name="cust_gender" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="lakilaki">
+                       <input class="form-check-input" v-model="form.gender" type="radio" name="gender" id="flexRadioDefault1" value="lakilaki">
                        <label class="form-check-label" for="flexRadioDefault1">
                         Laki laki
                        </label>
                      </div>
                      <div class="form-check">
-                       <input class="form-check-input" name="cust_gender" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="perempuan"
+                       <input class="form-check-input" v-model="form.gender" type="radio" name="gender" id="flexRadioDefault2" value="perempuan"
                          >
                        <label class="form-check-label" for="flexRadioDefault2">
                          Perempuan
@@ -303,7 +303,7 @@
                    </div>
                     <div class="col-12">
                       <div class="form-check">
-                        <input class="form-check-input" name="cust_agree" type="checkbox" id="gridCheck">
+                        <input class="form-check-input" v-model="cust_agree" type="checkbox" id="gridCheck">
                         <label class="form-check-label" for="gridCheck">
                           Saya setuju terhadap <a href="#">Syarat dan Ketentuan</a>  tiketing dan <a href="#">Kebijakan Privasi</a> tiketing
                         </label>
@@ -311,13 +311,65 @@
                     </div>                   
                   </div>
 
+                  <hr>
+                  
+                  <div class="card-body">
+                      <h6 class="text-primary">Pilih Metode pembayaran</h6>
+
+                      <div class="row">
+                          <div class='col col-md-3 text-center'>
+                              <input type="radio" name="payment_method" id="bank_transfer" class="d-none imgbgchk"
+                                  value="5000">
+                              <label for="bank_transfer"><small>bank transfer</small>
+                                  <img src="{{ asset('icon/banktficon.png') }}" alt="Image 1">
+                                  <div class="tick_container">
+                                      <div class="tick"><i class="bi bi-check"></i></div>
+                                  </div>
+                              </label>
+                          </div>
+                          <div class='col col-md-3 text-center'>
+                              <input type="radio" name="payment_method" id="credit_card" class="d-none imgbgchk"
+                                  value="">
+                              <label for="credit_card"><small>kartu kredit</small>
+                                  <img src="{{ asset('icon/creditcard.png') }}" alt="Image 2">
+                                  <div class="tick_container">
+                                      <div class="tick"><i class="bi bi-check"></i></div>
+                                  </div>
+                              </label>
+                          </div>
+                      </div>
+                  </div>
+                  
+
                   <div class="card-footer">
+                   <div class="d-flex justify-content-between bd-highlight">     
+                      <div class="p-2 flex-grow-1 bd-highlight all_qty">Subtotal (<span style="font-style: italic;"></span> Tiket)</div>
+                      <div class="p-2 bd-highlight total">Total tiket Rp. <span style="font-style: bold;">Total tiket Rp.</span></div>
+                      
+                    </div>
+                    <div class="d-flex justify-content-end bd-highlight">
+                      <input type="hidden" name="admin_fee" id="biaya_admin">
+                      <div class="p-2 bd-highlight admin_fee"> <span style="font-style: bold;">Biaya Admin Rp. </span></div>                      
+                    </div>
+                     <div class="d-flex justify-content-end bd-highlight">                      
+                      <div class="p-2 bd-highlight grand"> <span style="font-style: bold;"> Grand total Rp. </span></div>
+                    </div>
+                    
+                    <div class="d-flex flex-row bd-highlight">                     
+                      <div class="p-2 flex-grow-1 bd-highlight"><a href="#featured" class="scrollTok"> <i class='bx bx-arrow-back'></i> Kembali</a></div>
+                      {{-- <div class="p2 bd-highlight"><button class="ticket_btn" id="btn_checkout">Beli Tiket</button></div> --}}
+                      <div class="p2 bd-highlight"><button class="btn btn-primary" id="btn_lanjutkan">Lanjutkan</button></div>
+                    </div>
+                </div>
+
+                  {{-- <div class="card-footer">
                     <div class="d-flex flex-row bd-highlight">     
                       <div class="p-2 flex-grow-1 bd-highlight"><a href="#featured" class="scrollTok"> <i class='bx bx-arrow-back'></i> Kembali</a></div>                      
                       <div class="p2 bd-highlight"><button class="btn btn-primary" id="btn_lanjutkan">Lanjutkan</button></div>
                     </div>                                            
-                  </div>
+                  </div> --}}
                 </div>
+                 </form>
                 
                 <!-- end payment chanel  -->
 
@@ -348,7 +400,7 @@
 
                     <div class="row">
                      <div class='col col-md-3 text-center'>
-                       <input type="radio" name="payment_method" id="bank_transfer" class="d-none imgbgchk" value="5000">
+                       <input type="radio" v-model="form.payment_method" name="payment_method" id="bank_transfer" class="d-none imgbgchk" value="5000">
                        <label for="bank_transfer"><small>bank transfer</small>
                          <img src="{{ asset('icon/banktficon.png') }}" alt="Image 1">
                          <div class="tick_container">
@@ -357,7 +409,7 @@
                        </label>
                      </div>
                      <div class='col col-md-3 text-center'>
-                       <input type="radio" name="payment_method" id="credit_card" class="d-none imgbgchk" value="">
+                       <input type="radio" v-model="form.payment_method" name="payment_method" id="credit_card" class="d-none imgbgchk" value="">
                        <label for="credit_card"><small>kartu kredit</small>
                          <img src="{{ asset('icon/creditcard.png') }}" alt="Image 2">
                          <div class="tick_container">
@@ -814,8 +866,7 @@
                                $('.ticket').show();
 
                                this.tickets = response.data.data;
-                               console.log(response.data.data);
-
+                              //  console.log(response.data.data);
 
                                 $('.readmore').expander({
                                     slicePoint: 50
@@ -833,7 +884,9 @@
                            });
                    },
 
-                   submitForm() {
+                   pesanTicket() {
+
+                    alert('submit');
                        axios.post('{{ route("pesanticket") }}', this.form)
                            .then((res) => {
                                //Perform Success Action

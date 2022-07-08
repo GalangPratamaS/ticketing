@@ -129,7 +129,7 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                           qty += parseFloat($(".qt").eq(index).val());
                       });
 
-                      console.log('harga'+ prices +"Qty" + qty);
+                    //   console.log('harga'+ prices +"Qty" + qty);
                       
                       prices = Math.round(prices * 100) / 100;
 

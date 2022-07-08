@@ -22,7 +22,7 @@ class CreateTableTickets extends Migration
             $table->dateTimeTz('created_at', $precision = 0);
             $table->softDeletes($column = 'deleted_at', $precision = 0);   
             
-             $table->foreign('ticket_category')->references('id')->on('ticket_category');
+            $table->foreign('ticket_category')->references('id')->on('ticket_category');
         });
     }
 
