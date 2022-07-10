@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Services\Midtrans\CreateSnapTokenService;
 
 class BuyController extends Controller
@@ -15,7 +16,7 @@ class BuyController extends Controller
     public function index()
     {
         //
-        $id = 'RHD-'.rand(100,500);
+        $id = 'RHD-'.Str::upper(Str::random(4)."-".Str::random(4));
         $midtrans = new CreateSnapTokenService($id);
         $snapToken = $midtrans->getSnapToken($id);
 

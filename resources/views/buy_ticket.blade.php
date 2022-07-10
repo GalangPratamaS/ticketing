@@ -303,7 +303,7 @@
                    </div>
                     <div class="col-12">
                       <div class="form-check">
-                        <input class="form-check-input" v-model="cust_agree" type="checkbox" id="gridCheck">
+                        <input class="form-check-input" v-model="form.cust_agree" type="checkbox" id="gridCheck">
                         <label class="form-check-label" for="gridCheck">
                           Saya setuju terhadap <a href="#">Syarat dan Ketentuan</a>  tiketing dan <a href="#">Kebijakan Privasi</a> tiketing
                         </label>
@@ -338,9 +338,16 @@
                               </label>
                           </div>
                       </div>
+
+                      <p>Biaya admin tergantung dari metode pembayaran :                         
+                      </p>
+                      <ol>
+                        <li>Bank transfer : Rp.5000 / Transaksi</li>
+                        <li>kartu kredit : 3% dari jumlah total Transaksi</li>
+                        <li>QRis : 2.7% dari jumlah total Transaksi</li>
+                      </ol>
                   </div>
                   
-
                   <div class="card-footer">
                    <div class="d-flex justify-content-between bd-highlight">     
                       <div class="p-2 flex-grow-1 bd-highlight all_qty">Subtotal (<span style="font-style: italic;"></span> Tiket)</div>
@@ -392,10 +399,9 @@
                   </div>
                   <small class="text-primary">*Informasi dikirimkan ke email</small>
                 
-
                 <hr>
 
-                <div class="card-body">
+                {{-- <div class="card-body">
                   Pilih Metode pembayaran
 
                     <div class="row">
@@ -421,6 +427,7 @@
                    </div>
 
                 </div>
+                --}}
 
                 <div class="card-footer">
                    <div class="d-flex justify-content-between bd-highlight">     
@@ -439,11 +446,10 @@
                     <div class="d-flex justify-content-end bd-highlight">                     
                       <div class="p2 bd-highlight"><button class="ticket_btn" id="btn_checkout">Beli Tiket</button></div>
                     </div>
-                </div>
+                </div> 
 
                 </div>
-
-                
+               
                 
               </div>
           
@@ -484,7 +490,6 @@
         </div>
 
          
-
       </div>
     </section><!-- End Details Section -->
 
@@ -833,7 +838,7 @@
                            ticket: [],
                            qty: [],
                            price: [],
-                           terms: '',
+                           cust_agree: '',
                            payment: '',
                        },
                        tickets: {},
@@ -886,7 +891,7 @@
 
                    pesanTicket() {
 
-                    alert('submit');
+                    if(confirm("Apakah yakin isian sudah sesuai?")){
                        axios.post('{{ route("pesanticket") }}', this.form)
                            .then((res) => {
                                //Perform Success Action
@@ -896,6 +901,7 @@
                            }).finally(() => {
                                //Perform action in always
                            });
+                          }
                    }
                }
            })
@@ -925,7 +931,10 @@
           e.preventDefault();
           var target = $(this).attr('href');
             $('.panel_ticket').attr("style", "display: ");
-            $('#payment_panel').hide();         
+            $('#payment_panel').hide();  
+            $('#btn_lanjutkan').attr('disabled', true);
+            $('input:radio').prop('checked', false);
+
         });
     </script>
 

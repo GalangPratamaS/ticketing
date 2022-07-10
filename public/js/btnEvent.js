@@ -160,6 +160,7 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                                 $(".admin_fee span").html("Biaya admin Rp."+ this.value);
                                 total_harga = parseFloat($('#total_price').val()) + parseFloat(this.value);
                                 $(".grand span").html("Grand total Rp."+ total_harga);
+                                $('#btn_lanjutkan').prop("disabled", false);
 
                             }
                         });

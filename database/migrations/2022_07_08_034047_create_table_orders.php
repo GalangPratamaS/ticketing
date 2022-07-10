@@ -24,8 +24,8 @@ class CreateTableOrders extends Migration
             $table->string('payment_method', 50);
             $table->string('bank', 250);
             $table->string('va_number', 50);
-            $table->string('payment_status', 50);
-            $table->string('payment_code', 3);
+            $table->enum('payment_status', ['settlement','pending','waiting']);
+            $table->enum('payment_code', [200,201,202]);
             $table->integer('grand_total');
             $table->integer('expired_time');
             $table->softDeletes($column = 'deleted_at', $precision = 0);   
