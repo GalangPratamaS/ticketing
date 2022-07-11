@@ -176,6 +176,8 @@
                 
 
                 <div class="card mt-2" style="width: 100%; margin: 20px;">
+                  {{-- <form class="" method="post" v-on:submit.prevent="pesanTicket"> --}}
+                  <form class="" method="post" @submit.prevent="">
              
                   <div class="card-body ticketitem" id="ticket_box">
                     
@@ -207,10 +209,10 @@
                           data-type="minus" :data-ticket="ticket.ticket_name" :data-id-ticket="ticket.id" :data-field="'quant['+ticket.id+']'">
                           <i class="bx bx-minus"></i>
                         </button>
-                        <input type="text" :name="'quant['+ticket.id+']'" class="form-control input-sm input-number qt" value="0" min="0"
+                        <input type="text" v-model="'form.quant['+ticket.id+']'" :name="'quant['+ticket.id+']'" class="form-control input-sm input-number qt" value="0" min="0"
                           max="10">
-                        <input type="hidden" :name="'id_ticket['+ticket.id+']'" :value="ticket.id">
-                        <input type="hidden" :name="'price['+ticket.id+']'" class="input-number price" :value="ticket.ticket_price">
+                        <input type="hidden" v-model="'form.id_ticket['+ticket.id+']'" :name="'id_ticket['+ticket.id+']'" :value="ticket.id">
+                        <input type="hidden" v-model="form.'price['+ticket.id+']'" :name="'price['+ticket.id+']'" class="input-number price" :value="ticket.ticket_price">
                         <input type="hidden" :name="'fullprice['+ticket.id+']'" class="input-number full-price" value="0">
                         <button class="btn btn-outline-primary btn-number" data-type="plus" :data-ticket="ticket.ticket_name" :data-id-ticket="ticket.id" :data-field="'quant['+ticket.id+']'">
                           <i class="bx bx-plus"></i>
@@ -229,7 +231,7 @@
 
                   <div class="card-footer">
                     <div class="d-flex bd-highlight">    
-                      <input type="hidden" name="total_price" id="total_price" value=""> 
+                      <input type="hidden" v-model="total_price" name="total_price" id="total_price" value=""> 
                       <div class="p-2 flex-grow-1 bd-highlight all_qty">Subtotal (<span style="font-style: italic;"></span> Tiket)</div>
                       <div class="p-2 bd-highlight total"> Rp.<span>  </span></div>
                       <div class="p2 bd-highlight"><button class="btn btn-primary" id="btn_payment" disabled="disabled">Beli Tiket</button></div>
@@ -242,7 +244,7 @@
                 <!-- payment chanel view -->
                 <div class="card-body" id="payment_panel" class="payment_panel" style="display: none">
                   <h6 class="text-primary mb-2">Ringkasan Pembelian</h6>
-                  <form class="" method="post" v-on:submit.prevent="pesanTicket">
+                  
                   <div class="ticket_selected">
                     <div class="row">
                       <div class="col-md-6 col-sm-6"><p class="text-black">Tiket Rumah hantu weekday</p></div>                      
@@ -303,7 +305,7 @@
                    </div>
                     <div class="col-12">
                       <div class="form-check">
-                        <input class="form-check-input" v-model="form.cust_agree" type="checkbox" id="gridCheck">
+                        <input class="form-check-input" v-model="form.cust_agree" type="checkbox" id="gridCheck" required>
                         <label class="form-check-label" for="gridCheck">
                           Saya setuju terhadap <a href="#">Syarat dan Ketentuan</a>  tiketing dan <a href="#">Kebijakan Privasi</a> tiketing
                         </label>
@@ -318,7 +320,7 @@
 
                       <div class="row">
                           <div class='col col-md-3 text-center'>
-                              <input type="radio" name="payment_method" id="bank_transfer" class="d-none imgbgchk"
+                              <input type="radio" v-model="form.payment_method" name="payment_method" id="bank_transfer" class="d-none imgbgchk"
                                   value="5000">
                               <label for="bank_transfer"><small>bank transfer</small>
                                   <img src="{{ asset('icon/banktficon.png') }}" alt="Image 1">
@@ -328,7 +330,7 @@
                               </label>
                           </div>
                           <div class='col col-md-3 text-center'>
-                              <input type="radio" name="payment_method" id="credit_card" class="d-none imgbgchk"
+                              <input type="radio" v-model="form.payment_method" name="payment_method" id="credit_card" class="d-none imgbgchk"
                                   value="">
                               <label for="credit_card"><small>kartu kredit</small>
                                   <img src="{{ asset('icon/creditcard.png') }}" alt="Image 2">
@@ -350,12 +352,13 @@
                   
                   <div class="card-footer">
                    <div class="d-flex justify-content-between bd-highlight">     
+                      <input type="hidden" v-model="form.admin_fee" name="admin_fee" id="biaya_admin">
+                      <input type="hidden" v-model="form.qty_total" name="qty_total" id="qty_total">                      
                       <div class="p-2 flex-grow-1 bd-highlight all_qty">Subtotal (<span style="font-style: italic;"></span> Tiket)</div>
                       <div class="p-2 bd-highlight total">Total tiket Rp. <span style="font-style: bold;">Total tiket Rp.</span></div>
-                      
+                      <input >
                     </div>
-                    <div class="d-flex justify-content-end bd-highlight">
-                      <input type="hidden" name="admin_fee" id="biaya_admin">
+                    <div class="d-flex justify-content-end bd-highlight">                      
                       <div class="p-2 bd-highlight admin_fee"> <span style="font-style: bold;">Biaya Admin Rp. </span></div>                      
                     </div>
                      <div class="d-flex justify-content-end bd-highlight">                      
@@ -365,7 +368,7 @@
                     <div class="d-flex flex-row bd-highlight">                     
                       <div class="p-2 flex-grow-1 bd-highlight"><a href="#featured" class="scrollTok"> <i class='bx bx-arrow-back'></i> Kembali</a></div>
                       {{-- <div class="p2 bd-highlight"><button class="ticket_btn" id="btn_checkout">Beli Tiket</button></div> --}}
-                      <div class="p2 bd-highlight"><button class="btn btn-primary" id="btn_lanjutkan">Lanjutkan</button></div>
+                      <div class="p2 bd-highlight"><button class="btn btn-primary" @click="pesanTicket" id="btn_lanjutkan">Lanjutkan</button></div>
                     </div>
                 </div>
 
@@ -435,8 +438,7 @@
                       <div class="p-2 bd-highlight total">Total tiket Rp. <span style="font-style: bold;">Total tiket Rp.</span></div>
                       
                     </div>
-                    <div class="d-flex justify-content-end bd-highlight">
-                      <input type="hidden" name="admin_fee" id="biaya_admin">
+                    <div class="d-flex justify-content-end bd-highlight">                      
                       <div class="p-2 bd-highlight admin_fee"> <span style="font-style: bold;">Biaya Admin Rp. </span></div>                      
                     </div>
                      <div class="d-flex justify-content-end bd-highlight">                      
@@ -830,16 +832,19 @@
                    const later = new Date(2022, 8, 30)
                    return {
                        form: {
-                           fname: '',
-                           lname: '',
-                           email: '',
+                           cust_firstname: '',
+                           cust_lastname: '',
+                           cust_email: '',
                            gender: '',
                            phone: '',
                            ticket: [],
                            qty: [],
                            price: [],
+                           admin_fee: '',
+                           qty_total:'',
+                           grand_total:'',
                            cust_agree: '',
-                           payment: '',
+                           payment_method: '',
                        },
                        tickets: {},
                        days: [],

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Services\Midtrans\CreateSnapTokenService;
+use App\Models\Ticket;
 
 class BuyController extends Controller
 {
@@ -41,7 +42,37 @@ class BuyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+          $request->validate([
+            'cust_email' => 'required|email:rfc,dns',
+            'cust_phone' => 'required|numeric',
+            'cust_firstname' => 'required',
+            'cust_lastname' => 'required',
+            'gender' => 'required',
+            'gender' => 'required',
+            'cust_agree' => 'required',
+            'total_price' => 'required',
+            'payment_method' => 'required',  
+                       
+        ]);
+
+        Ticket::create([
+            'cust_email' => 'Namanya',
+            'cust_firstname' => 'Namanya',
+            'cust_lastname' => 'Nama blknya',
+            'cust_phone' => 'Nama blknya',
+            
+        ]);
+
+        //  DB::table('users')->insert([
+        //             'email' => 'kayla@example.com',
+        //             'votes' => 0
+        //         ]);
+
+        //  foreach ($request->ticket as $key => $value) {
+
+        //  }
+
     }
 
     /**

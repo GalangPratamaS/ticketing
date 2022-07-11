@@ -24,3 +24,4 @@ Route::post('/adminlogin', 'App\Http\Controllers\Admin\LoginController@authentic
 Route::post('/logout', 'App\Http\Controllers\Admin\LoginController@logout');
 
 Route::get('/dashboard', 'App\Http\Controllers\Admin\DashboardController@index');
+Route::get('/invoices', 'App\Http\Controllers\Invoices@index');

@@ -127,6 +127,7 @@ $(document.body).on('click', 'button.btn-number', function(e) {
 
                       $(".qt").each(function (index) {
                           qty += parseFloat($(".qt").eq(index).val());
+                          $('#qty_total').val(qty);
                       });
 
                     //   console.log('harga'+ prices +"Qty" + qty);
@@ -156,7 +157,8 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                             if (this.checked) {
                                         
                                 var total_harga;            
-                                // console.log('admin adalah ' + this.value);            
+                                // console.log('admin adalah ' + this.value);   
+                                $("#biaya_admin").val(this.value);
                                 $(".admin_fee span").html("Biaya admin Rp."+ this.value);
                                 total_harga = parseFloat($('#total_price').val()) + parseFloat(this.value);
                                 $(".grand span").html("Grand total Rp."+ total_harga);
