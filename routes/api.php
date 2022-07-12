@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\TicketingController;
+use App\Http\Controllers\BuyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('ticket', [TicketingController::class,'index']);
 Route::post('ticket/date', [TicketingController::class,'showTicketFilter'])->name('ticket');
-Route::post('ticket/order', [TicketingController::class,'reserveTicket'])->name('pesanticket');
+Route::post('ticket/order', [BuyController::class,'store'])->name('pesanticket');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

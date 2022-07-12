@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order_items;
+use App\Models\Orders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Services\Midtrans\CreateSnapTokenService;
-use App\Models\Ticket;
 
 class BuyController extends Controller
 {
@@ -43,35 +44,60 @@ class BuyController extends Controller
     public function store(Request $request)
     {
 
-          $request->validate([
+        $order_id = 'RHD-'.Str::upper(Str::random(4)."-".Str::random(4));
+
+         $validatedData =  $request->validate([
             'cust_email' => 'required|email:rfc,dns',
             'cust_phone' => 'required|numeric',
             'cust_firstname' => 'required',
             'cust_lastname' => 'required',
-            'gender' => 'required',
-            'gender' => 'required',
+            'gender' => 'required',            
             'cust_agree' => 'required',
-            'total_price' => 'required',
+            'grand_total' => 'required',
+            'total_qty' => 'required',
             'payment_method' => 'required',  
-                       
+            'admin_fee' => 'required',                         
+        ]);
+        
+
+       $orders = Orders::create([
+            'order_code' => $order_id,
+            'customer_email' =>  $validatedData['cust_email'] ,
+            'customer_name' => $validatedData['cust_firstname']." ".$validatedData['cust_lastname'],
+            'customer_phone' => $validatedData['cust_phone'],
+            'cust_gender' => $validatedData['gender'],
+            'total_ticket' => $validatedData['total_qty'],
+            'grand_total' => $validatedData['grand_total'],
+            'payment_status' => 'pending',
+            'payment_code' => 201,
+            'payment_method' => $validatedData['payment_method'],
+            'expired_time' => '2022-09-18 10:34:09.000',
         ]);
 
-        Ticket::create([
-            'cust_email' => 'Namanya',
-            'cust_firstname' => 'Namanya',
-            'cust_lastname' => 'Nama blknya',
-            'cust_phone' => 'Nama blknya',
+
+        if(!$orders){
+            echo 'teu asup nya';
+        } else {
+            // Masukan data ke tabel order_items
+            foreach($request['id_tiket'] as $key => $value )
+            {
+                // echo "{$key} => {$value} ";
+                // print_r($request['id_tiket']);
+                 if($request['qty'][$key] != 0){
+                    Order_items::Create([
+                                        'order_codes' => $order_id,
+                                        'ticket_id' => $request['id_tiket'][$key],
+                                        'ticket_name' => $request['ticket'][$key],
+                                        'ticket_price' => $request['price'][$key],
+                                        'qty' => $request['qty'][$key],
+                                        'status' => 'unclaimed',              
+                                    ]); 
+                    echo 'data udah masuk bos';
+                }
+            }           
             
-        ]);
-
-        //  DB::table('users')->insert([
-        //             'email' => 'kayla@example.com',
-        //             'votes' => 0
-        //         ]);
-
-        //  foreach ($request->ticket as $key => $value) {
-
-        //  }
+        }
+        
 
     }
 

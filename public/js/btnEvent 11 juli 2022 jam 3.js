@@ -5,6 +5,7 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                       fieldName = $(this).attr('data-field');
                       ticketName = $(this).attr('data-ticket');
                       ticketId = $(this).attr('data-id-ticket');
+                      
                       type = $(this).attr('data-type');
                       var input = $("input[name='" + fieldName + "']");
                       var currentVal = parseInt(input.val());
@@ -129,8 +130,12 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                           qty += parseFloat($(".qt").eq(index).val());
                           $('#total_qty').val(qty);
                       });
-                                          
+
+                    //   console.log('harga'+ prices +"Qty" + qty);
+                      
                       prices = Math.round(prices * 100) / 100;
+
+                    //   console.log('harga'+ price +"Qty" + qty);
 
                       var fullPrice = parseFloat(prices);
 
@@ -139,8 +144,11 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                       }
                       cc = fullPrice * 0.03;
 
+                    //   $('#credit_card').val(cc);
+                    //   $('#bank_transfer').val(5000);
                       $('#total_price').val(fullPrice);
                       console.log('biaya cc = ' + cc);
+
 
                       $(".all_qty span").html(qty);
                       $(".total span").html(fullPrice);
@@ -170,4 +178,4 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                                 $('#btn_lanjutkan').prop("disabled", false);
 
                             }
-                    });
+                        });
