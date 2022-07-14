@@ -28,6 +28,7 @@
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/ticket.css') }}" rel="stylesheet">
   <link href="{{ asset('css/button_add_minus.css') }}" rel="stylesheet">
   
@@ -166,67 +167,21 @@
                 
               </div>
               <div class="card-body d-flex align-items-center flex-column mb-3 panel_ticket" id="panel_ticket">
-                  <div style="font-weight: bold; color: rgb(51, 51, 51);">Pilih tanggal kedatanganmu</div> <br>
-                <v-date-picker @dayclick="onDayClick" :locale="{ id: 'id',  masks: { weekdays: 'WWW' } }" :model-config="modelConfig" mode="date" title-position="left" color="blue" :min-date='new Date(2022,7,17)' :max-date='new Date(2022, 8, 30),' v-model='selectedDate' >
-                   
-                </v-date-picker>        
-                <div class="col-md-3">
-                  <input type="text" placeholder="select date" class="form-control mt-2" id="dateSelected" v-model='selectedDate' :value='selectedDate' readonly>
-                </div>        
+                  <div style="font-weight: bold; color: rgb(51, 51, 51);">Pilih tanggal kedatanganmu</div> <br>                                     
                 
 
-                <div class="card mt-2" style="width: 100%; margin: 20px;">
-                  {{-- <form class="" method="post" v-on:submit.prevent="pesanTicket"> --}}
-                  <form action="{{ route("pesanticket") }}" method="post" @submit.prevent="">
-                {{-- <form id="pesanticket" name="pesanticket" action="{{ route("pesanticket") }}" method="post"> --}}
-             
+                <div class="card mt-2" style="width: 100%; margin: 20px;">                  
+                  
+                <form id="pesanticket" name="pesanticket" action="{{ route("pesanticket") }}" method="post">
+                  <div class="input-group mb-3">
+                      <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>                      
+                      <input type="text" name="ticket_date" class="form-control datepicker" data-date-format="yyyy-mm-dd">
+                    </div>
                   <div class="card-body ticketitem" id="ticket_box">
                     
                     <div class="notif_ticket" ></div>
-                    <div class="ticket" v-for="ticket in tickets" :key="ticket.id">
-                      <div class="items">
-                      <p class="ticket-title">@{{ ticket.ticket_name  }}</p>  <br>
+                    <div class="ticket"></div>
                     
-                      <!-- <input type="hidden" class="price" name="ticket_price[1]" value="30000"> -->
-                                       
-                    
-                    <p class="ticket-description"> <i class="bi bi-clock"></i> @{{ ticket.ticket_date }} , 16.00 - 22.00 WIB  </p>
-                    <div class="readmore">
-                      <p class="ticket-description">Syarat dan ketentuan</p>
-                      <ol>
-                        <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li>
-                        <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li>
-                        <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li>
-                        <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li>
-                      </ol>
-                    </div>
-                    
-
-                    <br>
-                    <div class="d-flex flex-row-reverse bd-highlight">
-                      <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;">
-                        <div class="input-group input-group-sm">
-                        <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled"
-                          data-type="minus" :data-ticket="ticket.ticket_name" :data-id-ticket="ticket.id" :data-field="'quant['+ticket.id+']'">
-                          <i class="bx bx-minus"></i>
-                        </button>
-                        <input type="text" :v-model="'form.quant['+ticket.id+']'" :name="'quant['+ticket.id+']'" class="form-control input-sm input-number qt" value="0" min="0"
-                          max="10">
-                        <input type="hidden" :v-model="'form.id_ticket['+ticket.id+']'" :name="'form.id_ticket['+ticket.id+']'" :value="ticket.id">
-                        <input type="hidden" :v-model="'form.price['+ticket.id+']'" :name="'form.price['+ticket.id+']'" class="input-number price" :value="ticket.ticket_price">
-                        <input type="hidden" :name="'fullprice['+ticket.id+']'" class="input-number full-price" value="0">
-                        <button class="btn btn-outline-primary btn-number" data-type="plus" :data-ticket="ticket.ticket_name" :data-id-ticket="ticket.id" :data-field="'quant['+ticket.id+']'">
-                          <i class="bx bx-plus"></i>
-                        </button>
-                      </div>
-                      </div>
-                      
-                       <div class="p-2 bd-highlight"><p class="mr-2">Rp. @{{ ticket.ticket_price }} </p> </div>                      
-                    </div>
-                    <hr>
- 
-                    </div>
-                  </div>
                               
                   </div>                  
 
@@ -235,7 +190,7 @@
                       
                       <div class="p-2 flex-grow-1 bd-highlight all_qty">Subtotal (<span style="font-style: italic;"></span> Tiket)</div>
                       <div class="p-2 bd-highlight total"> Rp.<span>  </span></div>
-                      {{-- <div class="p2 bd-highlight"><button class="btn btn-primary" type="button" id="btn_payment" disabled="disabled">Beli Tiket</button></div> --}}
+                      <div class="p2 bd-highlight"><button class="btn btn-primary" type="button" id="btn_payment" disabled="disabled">Pilih tiket dan lanjutkan</button></div>
                     </div>                                            
                   </div>
 
@@ -243,8 +198,8 @@
                   </div>   
                 
                   <!-- payment chanel view -->
-                  <div class="card-body" id="payment_panel" class="payment_panel">
-                    <h6 class="text-primary mb-2">Ringkasan Pembelian</h6>
+                  <div class="card-body" id="payment_panel" class="payment_panel" style="display: none;">
+                    {{-- <h6 class="text-primary mb-2">Ringkasan Pembelian</h6>
                     
                     <div class="ticket_selected">
                       <div class="row">
@@ -265,9 +220,7 @@
                   <div class="summary">
                     <p class="all_qty">Subtotal : (<span></span>) Tiket</p>                    
                     <h6 class="text-black total">Total Rp. <span></span></h6>
-                  </div>
-
-                  <hr>
+                  </div> --}}                  
 
                   <h6 class="text-primary">Informasi Pembeli</h6>
                   
@@ -276,32 +229,32 @@
                   <div class="row g-3">
                     <div class="col-md-12">
                       <label for="inputEmail4" class="form-label">Email</label>
-                      <input type="email" v-model="form.cust_email" name="cust_email" class="form-control" id="inputEmail4" required>
+                      <input type="email" name="cust_email" class="form-control" id="inputEmail4" required>
                     </div>                    
                     <div class="col-12">
                       <label for="phoneNumber" class="form-label">Nomor Handphone</label>
-                      <input type="number" v-model="form.cust_phone" name="cust_phone" class="form-control" id="phoneNumber" placeholder="08129323121" required>
+                      <input type="number" name="cust_phone" class="form-control" id="phoneNumber" placeholder="08129323121" required>
                     </div>
                     <div class="col-6">
                       <label for="namaDepan" class="form-label">Nama Depan</label>
-                      <input type="text" v-model="form.cust_firstname" name="cust_firstname" class="form-control" id="namaDepan" required
+                      <input type="text" name="cust_firstname" class="form-control" id="namaDepan" required
                         placeholder="Nama Depan">
                     </div>
                     <div class="col-6">
                       <label for="namaBelakang" class="form-label">Nama Belakang</label>
-                      <input type="text" v-model="form.cust_lastname" name="cust_last_name" class="form-control" id="namaBelakang"
+                      <input type="text" name="cust_lastname" class="form-control" id="namaBelakang"
                         placeholder="Nama Belakang">
                     </div>
                    <div class="col-md-12">
                      <label for="Jenis Kelamin" class="form-label">Jenis Kelamin</label>
                      <div class="form-check">
-                       <input class="form-check-input" v-model="form.gender" type="radio" name="gender" id="flexRadioDefault1" value="lakilaki">
+                       <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault1" value="lakilaki">
                        <label class="form-check-label" for="flexRadioDefault1">
                         Laki laki
                        </label>
                      </div>
                      <div class="form-check">
-                       <input class="form-check-input" v-model="form.gender" type="radio" name="gender" id="flexRadioDefault2" value="perempuan"
+                       <input class="form-check-input" type="radio" name="gender" id="flexRadioDefault2" value="perempuan"
                          >
                        <label class="form-check-label" for="flexRadioDefault2">
                          Perempuan
@@ -310,7 +263,7 @@
                    </div>
                     <div class="col-12">
                       <div class="form-check">
-                        <input class="form-check-input" v-model="form.cust_agree" name="cust_agree" type="checkbox" id="gridCheck" required>
+                        <input class="form-check-input" name="cust_agree" type="checkbox" value="1" id="gridCheck" required>
                         <label class="form-check-label" for="gridCheck">
                           Saya setuju terhadap <a href="#">Syarat dan Ketentuan</a>  tiketing dan <a href="#">Kebijakan Privasi</a> tiketing
                         </label>
@@ -326,7 +279,7 @@
                       {{-- <input type="hidden" id="admin_fee" value=""> --}}
                       <div class="row">
                           <div class='col col-md-3 text-center'>
-                              <input type="radio" v-model="form.payment_method" name="payment_method" id="bank_transfer" class="d-none imgbgchk"
+                              <input type="radio" name="payment_method" id="bank_transfer" class="d-none imgbgchk"
                                   value="bank_transfer">
                               <label for="bank_transfer"><small>bank transfer</small>
                                   <img src="{{ asset('icon/banktficon.png') }}" alt="Image 1">
@@ -336,7 +289,7 @@
                               </label>
                           </div>
                           <div class='col col-md-3 text-center'>
-                              <input type="radio" v-model="form.payment_method" name="payment_method" id="credit_card" class="d-none imgbgchk"
+                              <input type="radio" name="payment_method" id="credit_card" class="d-none imgbgchk"
                                   value="credit_card">
                               <label for="credit_card"><small>kartu kredit</small>
                                   <img src="{{ asset('icon/creditcard.png') }}" alt="Image 2">
@@ -348,7 +301,7 @@
                       </div>
 
                       <input type="hidden"  name="total_price" id="total_price" value="0"> 
-                      <input type="hidden" v-model="form.grand_total" name="grand_total" id="grand_total" value="0"> 
+                      <input type="hidden" name="grand_total" id="grand_total" value="0"> 
 
                       <p>Biaya admin tergantung dari metode pembayaran :                         
                       </p>
@@ -361,8 +314,8 @@
                   
                   <div class="card-footer">
                    <div class="d-flex justify-content-between bd-highlight">     
-                      <input type="hidden" v-model="form.admin_fee" name="admin_fee" id="biaya_admin">
-                      <input type="hidden" v-model="form.total_qty" name="total_qty" id="total_qty">                      
+                      <input type="hidden" name="admin_fee" id="biaya_admin">
+                      <input type="hidden" name="total_qty" id="total_qty">                      
                       <div class="p-2 flex-grow-1 bd-highlight all_qty">Subtotal (<span style="font-style: italic;"></span> Tiket)</div>
                       <div class="p-2 bd-highlight total">Total tiket Rp. <span style="font-style: bold;">Total tiket Rp.</span></div>
                       <input >
@@ -377,10 +330,10 @@
                     <div class="d-flex flex-row bd-highlight">
                       <div class="p-2 flex-grow-1 bd-highlight"><a href="#featured" class="scrollTok"> <i class='bx bx-arrow-back'></i> Kembali</a></div>
                       {{-- <div class="p2 bd-highlight"><button class="ticket_btn" id="btn_checkout">Beli Tiket</button></div> --}}
-                      <div class="p2 bd-highlight"><button class="btn btn-primary" @click="pesanTicket" id="btn_lanjutkan">Lanjutkan</button></div>
+                      {{-- <div class="p2 bd-highlight"><button class="btn btn-primary" @click="pesanTicket" id="btn_lanjutkan">Lanjutkan</button></div> --}}
                       {{-- <button type="submit" form="pesanticket" class="btn btn-primary" id="btn_lanjutkan">Lanjutkan</button> --}}
                       <div class="p2 bd-highlight">
-                        {{-- <button  type="submit" class="btn btn-primary" id="btn_lanjutkan">Lanjutkan</button> --}}
+                        <button  type="submit" class="btn btn-primary">Checkout</button>
                         </form>
                       </div>
                     </div>
@@ -819,6 +772,7 @@
   <!-- <script src="https://cdn.jsdelivr.net/npm/vue@3.2.37/dist/vue.global.min.js"></script> -->
   <script src='https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js'></script>
   <script src='https://cdn.jsdelivr.net/npm/axios@0.27.2/dist/axios.min.js'></script>
+  <script src="{{ asset('js/jquery-redirect.js') }}"></script> 
 
 
     <!-- 2. Link VCalendar Javascript (Plugin automatically installed) -->
@@ -832,121 +786,53 @@
            $('.readmore').expander({
                slicePoint: 50
            });
+
+           $('.datepicker').datepicker({
+              
+              locale: 'id',
+              startDate: new Date('2022-08-17'),
+              endDate: new Date('2022-09-30'),                            
+          });          
+
+           $(".datepicker").on('change', function () {
+            
+               var tanggal = $(this).val(); 
+               //reset all
+               $('.notif_ticket').empty();
+               $('.ticket').empty();
+               $(".all_qty span").html("0");
+               $(".total span").html("Total tiket Rp.0");
+               $(".admin_fee span").html("Biaya admin Rp.");               
+               $(".grand span").html("Grand total Rp.");
+               $("#grand_total").val(0);               
+               $("#btn_payment").prop('disabled', true);
+               $.ajax({
+                   url: "{{ route('ticket') }}",
+                   data: {
+                       tanggal: tanggal
+                   },
+                   type: 'post'
+               }).done(function (json) {
+                   if (json.data && json.message == 'Success') {
+                       json.data.forEach(function (item) {
+
+                           console.log(item.ticket_name);
+                           $('.ticket').append(' <div class="items"> <p class="ticket-title">' + item.ticket_name + '</p> <br> <p class="ticket-description"> <i class="bi bi-clock"></i> ' + item.ticket_date + ' , 16.00 - 22.00 WIB </p> <div class="readmore"> <p class="ticket-description">Syarat dan ketentuan</p> <ol> <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li> <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li> <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li> <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li> </ol> </div> <br> <div class="d-flex flex-row-reverse bd-highlight"> <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;"> <div class="input-group input-group-sm"> <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled" data-type="minus" data-ticket="' + item.ticket_name + '" data-id-ticket="' + item.id + '" data-field="quant[' + item.id + ']"> <i class="bx bx-minus"></i> </button> <input type="text" name="quant[' + item.id + ']" class="form-control input-sm input-number qt" value="0" min="0" max="10"> <input type="hidden" name="ticket['+item.id+']" value="'+item.ticket_name+'"> <input type="hidden" name="id_ticket[' + item.id + ']" value="' + item.id + '"> <input type="hidden" name="price[' + item.id + ']" class="input-number price" value="' + item.ticket_price + '"> <input type="hidden" name="fullprice[' + item.id + ']" class="input-number full-price" value="0"> <button class="btn btn-outline-primary btn-number" data-type="plus" data-ticket="' + item.ticket_name + '" data-id-ticket="' + item.id + '" data-field="quant[' + item.id + ']"> <i class="bx bx-plus"></i> </button> </div> </div> <div class="p-2 bd-highlight"><p class="mr-2">Rp. ' + item.ticket_price + ' </p> </div> </div> <hr> </div> ');
+                       })
+                   }
+
+               }).fail(function () {
+                   $('.notif_ticket').append('<h3 class="text-muted">Ticket tidak tersedia</h3>');
+               });
+           });
          
        }); 
        </script> 
-     
-       <script>
-        // axios vue
-           new Vue({
-
-               el: '#app',
-               data() {
-                   const now = new Date(2022, 7, 17)
-                   const later = new Date(2022, 8, 30)
-                   return {
-                       form: {
-                           cust_firstname: '',
-                           cust_lastname: '',
-                           cust_email: '',
-                           gender: '',                           
-                           ticket: [],
-                           id_ticket: [],
-                           qty: [],
-                           price: [],
-                           admin_fee: '',
-                           total_qty:'',
-                           grand_total:'',
-                           cust_agree: '',
-                           payment_method: '',
-                       },
-                       tickets: {},
-                       days: [],
-                       selectedDate: null,
-                       availableDates: [{
-                           start: now,
-                           end: later
-                       }],
-                       modelConfig: {
-                           type: 'string',
-                           mask: 'DD-MM-YYYY', // Uses 'iso' if missing
-                       },
-                   }
-               },
-               //test script on select date!
-               methods: {
-                   onDayClick(day) {
-                       const idx = this.days.findIndex(d => d.id === day.id);
-                       $('.notif_ticket').empty();
-                       $(".all_qty span").html("0");
-                       $(".total span").html("Total tiket Rp.0");
-                       $("#btn_payment").prop('disabled', true);
-                       // const element = document.getElementById('#item_tiket');
-                       const tanggal = {
-                           tanggal: day.id
-                       };
-                      axios.post('{{ route("ticket") }}', tanggal, {
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                       })
-                           .then((response) => {
-                               $('.ticket').show();
-
-                               this.tickets = response.data.data;
-                              //  console.log(response.data.data);
-
-                                $('.readmore').expander({
-                                    slicePoint: 50
-                                });
-                             
-                           })
-                           .catch((error) => {
-                               
-                               $('.ticket').hide();
-
-                               $('.notif_ticket').append('<h3 class="text-muted">Ticket tidak tersedia</h3>');
-                               $(".all_qty span").html("0");
-                               $(".total span").html("Total tiket Rp.0");
-                               $("#btn_payment").prop('disabled', true);
-                           });
-                   },
-
-                   pesanTicket() {
-
-                    if(confirm("Apakah yakin isian sudah sesuai?")){
-                       const form = new FormData();
-
-                       form.append('ticket', this.ticket);
-                       form.append('id_ticket', this.ticket);
-                       form.append('qty', this.qty);
-                       form.append('price', this.price);
-                       form.append('grand_total', this.grand_total);
-                       form.append('admin_fee', this.admin_fee);
-                       form.append('total_qty', this.total_qty);
-                       axios.post('{{ route("pesanticket") }}', this.form, {
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                       })
-                           .then((res) => {
-                               //Perform Success Action
-                           })
-                           .catch((error) => {
-                               // error.response.status Check status code
-                           }).finally(() => {
-                               //Perform action in always
-                           });
-                          }
-                   }
-               }
-           })
-    </script>
-
+           
     <script type="application/javascript">
       $('#btn_payment').click(function(e){
-        $('.panel_ticket').attr("style", "display: none !important");        
-        $('#payment_panel').show(); 
+        $('.panel_ticket').attr("style", "display: none !important");
+        $('#payment_panel').show();
         
           $('html, body').animate({
               scrollTop: $("#features").offset().top
@@ -976,71 +862,40 @@
 
     <script>
     $(document).ready(function() { 
-
-      // $('#pesanticket').on('submit', function (e) {
-      //             console.log('harusnya kepencet')
-      //             e.preventDefault();
-      //             $.ajax({
-      //                 url: "{{ route('pesanticket') }}",
-      //                 type: "POST",
-      //                 data: $('#pesanticket').serialize(),
-      //                 success: function (response) {
-      //                     // $('#submit').html('Submit');
-      //                     // $("#submit").attr("disabled", false);
-      //                     alert('Ajax form has been submitted successfully');
-      //                     document.getElementById("pesanticket").reset();
-      //                 }
-      //             });
-        // e.preventDefault();
-        // const formData = new FormData(form);
-        // axios
-        //   .post('{{ route("pesanticket") }}', formData, {
-        //     headers: {
-        //        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')              
-        //     },
-        //   })
-        //   .then((res) => {
-        //     console.log(res);
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
+      
+      $('#pesanticket').on('submit', function (e) {
+                  //checkout ticket
+                  e.preventDefault();
+                  $.ajaxSetup({
+                    headers: {
+                        "X-CSRFToken": $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                  $.ajax({
+                      url: "{{ route('pesanticket') }}",
+                      type: "POST",
+                      data: $('#pesanticket').serialize(),
+                      success: function (response) {                          
+                          alert('Berhasil checkout dengan '+response.data);
+                          document.getElementById("pesanticket").reset();
+                          window.location.href = "{{ url('payment') }}/"+response.data;
+                          // $.redirect('{{ url("payment") }}', {'order_id': response.data, "X-CSRFToken" : $('meta[name="csrf-token"]').attr('content')});
+                      }
+                  });
+               
+          });
       });
       
     </script>
 
     
     <script src="{{ asset('js/btnEvent.js') }}"></script> 
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script> 
+    <script src="{{ asset('js/locales/bootstrap-datepicker.id.min.js') }}"></script> 
+
 
     <!-- END REQUIREMENT KALENDER AND TIKETING -->
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
-    <script>
-        const payButton = document.querySelector('#btn_checkout');
-        payButton.addEventListener('click', function(e) {
-            e.preventDefault();
- 
-            snap.pay('{{ $snapToken }}', {
-                // Optional
-                onSuccess: function(result) {
-                    /* You may add your own js here, this is just example */
-                    // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                    console.log(result)
-                },
-                // Optional
-                onPending: function(result) {
-                    /* You may add your own js here, this is just example */
-                    // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                    console.log(result)
-                },
-                // Optional
-                onError: function(result) {
-                    /* You may add your own js here, this is just example */
-                    // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                    console.log(result)
-                }
-            });
-        });
-    </script>
+    
   </div>
 </body>
 

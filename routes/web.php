@@ -18,6 +18,9 @@ Route::get('/', function () {
 });
 
 Route::get('ticket/','App\Http\Controllers\BuyController@index');
+Route::get('payment/{id}','App\Http\Controllers\BuyController@payment');
+
+// Route::get('ticket2/','App\Http\Controllers\BuyController@dummy');
 
 Route::get('/adminlogin', 'App\Http\Controllers\Admin\LoginController@index')->name('login')->middleware('guest');
 Route::post('/adminlogin', 'App\Http\Controllers\Admin\LoginController@authenticate');

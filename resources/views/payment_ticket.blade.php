@@ -28,6 +28,7 @@
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/ticket.css') }}" rel="stylesheet">
   <link href="{{ asset('css/button_add_minus.css') }}" rel="stylesheet">
   
@@ -165,199 +166,21 @@
                 </div>
                 
               </div>
-              <div class="card-body d-flex align-items-center flex-column mb-3 panel_ticket" id="panel_ticket">
-                <div style="
-    font-weight: bold;     
-    color: rgb(51, 51, 51);">Pilih tanggal kedatanganmu</div> <br>
-                <v-date-picker @dayclick="onDayClick" :locale="{ id: 'id',  masks: { weekdays: 'WWW' } }" :model-config="modelConfig" mode="date" title-position="left" color="blue" :min-date='new Date(2022,7,17)' :max-date='new Date(2022, 8, 30),' v-model='selectedDate' >
-                   
-                </v-date-picker>        
-                <div class="col-md-3">
-                  <input type="text" placeholder="select date" class="form-control mt-2" id="dateSelected" v-model='selectedDate' :value='selectedDate' readonly>
-                </div>        
-                
+                                              
 
-                <div id="item_tiket" class="card mt-2 ticketitem" style="width: 100%; margin: 20px;">
-                  <!-- <div class="card-header"></div> -->
-                  {{-- <table>
-                    <tr>
-                      <td>Nama tiket</td>
-                      <td>harga</td>
-                    </tr>
-                    <tr v-for="ticket in tickets" :key="ticket.id">
-                      <td>{{ ticket.ticket_name }}</td>
-                      <td>{{ ticket.ticket_price }}</td>
-                    </tr>
-                  </table> --}}
-                  <div class="card-body ticketitem">
-                    <div class="items">
-                    <p class="ticket-title">Tiket Wahana Rumah Hantu Weekday</p>  <br>
-                    
-                    <!-- <input type="hidden" class="price" name="ticket_price[1]" value="30000"> -->
-                                       
-                    
-                    <p class="ticket-description"> <i class="bi bi-clock"></i> 17 Agustus 2022 , 16.00 - 22.00 WIB  </p>
-                    <div class="readmore">
-                      <p class="ticket-description">Syarat dan ketentuan</p>
-                      <ol>
-                        <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li>
-                        <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li>
-                        <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li>
-                        <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li>
-                      </ol>
+                <div class="card-body" id="panel_payment2">
+                  <div class="row">
+                    <div class="col-md-4">
+                      Selesaikan pesanan anda dalam :
                     </div>
-                    
-
-                    <br>
-                    <div class="d-flex flex-row-reverse bd-highlight">
-                      <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;">
-                        <div class="input-group input-group-sm">
-                        <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled"
-                          data-type="minus" data-field="quant[1]">
-                          <i class='bx bx-minus'></i>
-                        </button>
-                        <input type="text" name="quant[1]" class="form-control input-sm input-number qt" value="0" min="0"
-                          max="10">
-                        <input type="hidden" name="id_ticket[1]" value="tkt1">
-                        <input type="hidden" name="price[1]" class="input-number price" value="300000">
-                        <input type="hidden" name="fullprice[1]" class="input-number full-price" value="0">
-                        <button class="btn btn-outline-primary btn-number" data-type="plus" data-field="quant[1]">
-                          <i class='bx bx-plus'></i>
-                        </button>
-                      </div>
-                      </div>
-                       <div class="p-2 bd-highlight showButton" id="show_button" style="display:none;"><button id="btn_add" class="btn btn-primary ml-2">Tambah</button></div>
-                       <div class="p-2 bd-highlight"><p class="mr-2">Rp.30.000 </p> </div>                      
-                    </div>
- 
+                    <div class="col-md-6"> {{ $order_data->expired_time }}</div>
                   </div>
-                  </div>
-
-                  <hr>
-
-                   <div class="card-body">
-                    <p class="ticket-title">Tiket Wahana Rumah Hantu Weekend</p>  <br>
-                    
-                    <!-- <input type="hidden" class="price" name="ticket_price[1]" value="30000"> -->
-                                       
-                    
-                    <p class="ticket-description"> <i class="bi bi-clock"></i> 17 Agustus 2022 , 16.00 - 22.00 WIB  </p>
-                    <div class="readmore">
-                      <p class="ticket-description">Syarat dan ketentuan</p>
-                      <ol>
-                        <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li>
-                        <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li>
-                        <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li>
-                        <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li>
-                      </ol>
-                    </div>
-                    
-                    
-                    <div class="d-flex flex-row-reverse bd-highlight">
-                      <div class="p-2 bd-highlight qtyControl" style="width: 115px !important; ">
-                        <div class="input-group input-group-sm">
-                        <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled"
-                          data-type="minus" data-field="quant[2]">
-                          <i class='bx bx-minus'></i>
-                        </button>
-                        <input type="hidden" name="id_ticket[2]" value="tkt2">
-                        <input type="text" name="quant[2]" class="form-control input-sm input-number qt" value="0" min="0"
-                          max="10">
-                        <input type="hidden" name="price[2]" class="form-control input-sm input-number price" value="400000">
-                        <input type="hidden" name="fullprice[2]" class="form-control input-sm input-number full-price" value="0">
-                        <button class="btn btn-outline-primary btn-number" data-type="plus" data-field="quant[2]">
-                          <i class='bx bx-plus'></i>
-                        </button>
-                      </div>
-                      </div>
-                       <div class="p-2 bd-highlight showButton" style="display:none;"><button class="btn_add btn btn-primary ml-2">Tambah</button></div>
-                       <div class="p-2 bd-highlight"><p class="mr-2">Rp.40.000 </p> </div>                      
-                    </div>
-
-                  </div>
-
-                  <div class="card-footer">
-                    <div class="d-flex bd-highlight">    
-                      <input type="hidden" name="total_price" id="total_price" value=""> 
-                      <div class="p-2 flex-grow-1 bd-highlight all_qty">Subtotal (<span style="font-style: italic;"></span> Tiket)</div>
-                      <div class="p-2 bd-highlight total"> <span> Rp. </span></div>
-                      <div class="p2 bd-highlight"><button class="btn btn-primary" id="btn_payment" disabled="disabled">Beli Tiket</button></div>
-                    </div>                                            
-                  </div>
-
-                  </div>
-                </div>   
-                
-                <!-- payment chanel view -->
-                <div class="card-body" id="payment_panel" class="payment_panel" style="display: none">
-                  <h3>Ringkasan Pembelian</h3>
-
-                  <div class="description">Informasi Pembeli</div>
-                  
-                  <hr>
-
-                  <form class="row g-3">
-                    <div class="col-md-12">
-                      <label for="inputEmail4" class="form-label">Email</label>
-                      <input type="email" name="cust_email" class="form-control" id="inputEmail4">
-                    </div>                    
-                    <div class="col-12">
-                      <label for="inputAddress" class="form-label">Nomor Handphone</label>
-                      <input type="phone" name="cust_phone" class="form-control" id="inputAddress" placeholder="08129323121">
-                    </div>
-                    <div class="col-6">
-                      <label for="namaDepan" class="form-label">Nama Depan</label>
-                      <input type="text" name="cust_firstname" class="form-control" id="namaDepan"
-                        placeholder="Nama Depan">
-                    </div>
-                    <div class="col-6">
-                      <label for="namaBelakang" class="form-label">Nama Belakang</label>
-                      <input type="text" name="cust_lastname" class="form-control" id="namaBelakang"
-                        placeholder="Nama Belakang">
-                    </div>
-                   <div class="col-md-12">
-                     <label for="Jenis Kelamin" class="form-label">Jenis Kelamin</label>
-                     <div class="form-check">
-                       <input class="form-check-input" name="cust_gender" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="lakilaki">
-                       <label class="form-check-label" for="flexRadioDefault1">
-                        Laki laki
-                       </label>
-                     </div>
-                     <div class="form-check">
-                       <input class="form-check-input" name="cust_gender" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="perempuan"
-                         >
-                       <label class="form-check-label" for="flexRadioDefault2">
-                         Perempuan
-                       </label>
-                     </div>
-                   </div>
-                    <div class="col-12">
-                      <div class="form-check">
-                        <input class="form-check-input" name="cust_agree" type="checkbox" id="gridCheck">
-                        <label class="form-check-label" for="gridCheck">
-                          Saya setuju terhadap <a href="#">Syarat dan Ketentuan</a>  tiketing dan <a href="#">Kebijakan Privasi</a> tiketing
-                        </label>
-                      </div>
-                    </div>                   
-                  </form>
-
-                  <div class="card-footer">
-                    <div class="d-flex flex-row bd-highlight">     
-                      <div class="p-2 flex-grow-1 bd-highlight"><a href="#featured" class="scrollTok"> <i class='bx bx-arrow-back'></i> Kembali</a></div>                      
-                      <div class="p2 bd-highlight"><button class="btn btn-primary" id="btn_lanjutkan">Lanjutkan</button></div>
-                    </div>                                            
-                  </div>
-                </div>
-
-                <!-- end payment chanel  -->
-
-                <div class="card-body" id="panel_payment2" style="display: none;">
                   <div class="row">
                     <div class="col-md-4">
                       Nomor Pesanan
                     </div>
                     <div class="col-md-6">
-                    : V30226-2BBF3FC-943
+                    : {{ $order_data->order_code }}
                     </div>
                   </div>
                   <div class="row">
@@ -365,63 +188,46 @@
                       Email Pembeli
                     </div>
                     <div class="col-md-6">
-                     : galangpr@gmail.com
+                     : {{$order_data->customer_email }}
                     </div>
                   </div>
                   <small class="text-primary">*Informasi dikirimkan ke email</small>
                 
-
                 <hr>
 
-                <div class="card-body">
-                  Pilih Metode pembayaran
-
-                    <div class="row">
-                     <div class='col col-md-3 text-center'>
-                       <input type="radio" name="payment_method" id="bank_transfer" class="d-none imgbgchk" value="5000">
-                       <label for="bank_transfer"><small>bank transfer</small>
-                         <img src="{{ asset('icon/banktficon.png') }}" alt="Image 1">
-                         <div class="tick_container">
-                           <div class="tick"><i class="bi bi-check"></i></div>
-                         </div>
-                       </label>
-                     </div>
-                     <div class='col col-md-3 text-center'>
-                       <input type="radio" name="payment_method" id="credit_card" class="d-none imgbgchk" value="">
-                       <label for="credit_card"><small>kartu kredit</small>
-                         <img src="{{ asset('icon/creditcard.png') }}" alt="Image 2">
-                         <div class="tick_container">
-                           <div class="tick"><i class="bi bi-check"></i></div>
-                         </div>
-                       </label>
-                     </div>
-                 
-                   </div>
-
-                </div>
+                <div class="ticket_selected">
+                      <div class="row">
+                      @foreach($order_items as $order_item)
+                        <div class="col-md-6 col-sm-6"><p class="text-black">{{ $order_item['ticket_name'] }}</p></div>                      
+                        <div class="col-md-4 col-sm-4"><p class="text-black"> x {{ $order_item['qty'] }}</p></div>                                              
+                      @endforeach
+                      </div>
+                      <div class="row">
+                        <p class="ticket-description"> <i class="bi bi-clock"></i>  {{ $order_data->ticket_date }} , 16.00 - 22.00 WIB  </p>
+                      </div>
+                    </div>
+                                
 
                 <div class="card-footer">
                    <div class="d-flex justify-content-between bd-highlight">     
-                      <div class="p-2 flex-grow-1 bd-highlight all_qty">Subtotal (<span style="font-style: italic;"></span> Tiket)</div>
-                      <div class="p-2 bd-highlight total"> <span style="font-style: bold;">Total tiket Rp.</span></div>
+                      <div class="p-2 flex-grow-1 bd-highlight all_qty">Jumlah tiket (<span style="font-style: italic;">{{ $order_data->total_ticket }}</span> Tiket)</div>
+                      <div class="p-2 bd-highlight total">Subtotal <span style="font-style: bold;">Rp. {{ $order_data->grand_total - $order_data->admin_fee }}</span></div>
                       
                     </div>
-                    <div class="d-flex justify-content-end bd-highlight">
-                      <input type="hidden" name="admin_fee" id="biaya_admin">
-                      <div class="p-2 bd-highlight admin_fee"> <span style="font-style: bold;">Biaya Admin Rp. </span></div>                      
+                    <div class="d-flex justify-content-end bd-highlight">                      
+                      <div class="p-2 bd-highlight admin_fee"> <span style="font-style: bold;">Biaya Admin Rp.{{$order_data->admin_fee}} </span></div>                      
                     </div>
                      <div class="d-flex justify-content-end bd-highlight">                      
-                      <div class="p-2 bd-highlight grand"> <span style="font-style: bold;"> Grand total Rp. </span></div>
+                      <div class="p-2 bd-highlight grand"> <span style="font-style: bold;"> Grand total Rp. {{$order_data->grand_total}}</span></div>
                     </div>
                     
                     <div class="d-flex justify-content-end bd-highlight">                     
-                      <div class="p2 bd-highlight"><button class="ticket_btn" id="btn_checkout">Beli Tiket</button></div>
+                      <div class="p2 bd-highlight"><button class="ticket_btn" id="btn_checkout">Bayar</button></div>
                     </div>
-                </div>
+                </div> 
 
                 </div>
-
-                
+               
                 
               </div>
           
@@ -462,7 +268,6 @@
         </div>
 
          
-
       </div>
     </section><!-- End Details Section -->
 
@@ -757,7 +562,6 @@
   
 
   <!-- Vendor JS Files -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js" integrity="sha512-x/vqovXY/Q4b+rNjgiheBsA/vbWA3IVvsS8lkQSX1gQ4ggSJx38oI2vREZXpTzhAv6tNUaX81E7QBBzkpDQayA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="{{ asset('vendor/purecounter/purecounter_vanilla.js') }}"></script>
   <script src="{{ asset('vendor/aos/aos.js') }}"></script>
   <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -790,96 +594,53 @@
            $('.readmore').expander({
                slicePoint: 50
            });
+
+           $('.datepicker').datepicker({
+              
+              locale: 'id',
+              startDate: new Date('2022-08-17'),
+              endDate: new Date('2022-09-30'),                            
+          });          
+
+           $(".datepicker").on('change', function () {
+            
+               var tanggal = $(this).val(); 
+               //reset all
+               $('.notif_ticket').empty();
+               $('.ticket').empty();
+               $(".all_qty span").html("0");
+               $(".total span").html("Total tiket Rp.0");
+               $(".admin_fee span").html("Biaya admin Rp.");               
+               $(".grand span").html("Grand total Rp."+ grand_total);
+               $("#grand_total").val(grand_total);               
+               $("#btn_payment").prop('disabled', true);
+               $.ajax({
+                   url: "{{ route('ticket') }}",
+                   data: {
+                       tanggal: tanggal
+                   },
+                   type: 'post'
+               }).done(function (json) {
+                   if (json.data && json.message == 'Success') {
+                       json.data.forEach(function (item) {
+
+                           console.log(item.ticket_name);
+                           $('.ticket').append(' <div class="items"> <p class="ticket-title">' + item.ticket_name + '</p> <br> <p class="ticket-description"> <i class="bi bi-clock"></i> ' + item.ticket_date + ' , 16.00 - 22.00 WIB </p> <div class="readmore"> <p class="ticket-description">Syarat dan ketentuan</p> <ol> <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li> <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li> <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li> <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li> </ol> </div> <br> <div class="d-flex flex-row-reverse bd-highlight"> <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;"> <div class="input-group input-group-sm"> <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled" data-type="minus" data-ticket="' + item.ticket_name + '" data-id-ticket="' + item.id + '" data-field="quant[' + item.id + ']"> <i class="bx bx-minus"></i> </button> <input type="text" name="quant[' + item.id + ']" class="form-control input-sm input-number qt" value="0" min="0" max="10"> <input type="hidden" name="ticket['+item.id+']" value="'+item.ticket_name+'"> <input type="hidden" name="id_ticket[' + item.id + ']" value="' + item.id + '"> <input type="hidden" name="price[' + item.id + ']" class="input-number price" value="' + item.ticket_price + '"> <input type="hidden" name="fullprice[' + item.id + ']" class="input-number full-price" value="0"> <button class="btn btn-outline-primary btn-number" data-type="plus" data-ticket="' + item.ticket_name + '" data-id-ticket="' + item.id + '" data-field="quant[' + item.id + ']"> <i class="bx bx-plus"></i> </button> </div> </div> <div class="p-2 bd-highlight"><p class="mr-2">Rp. ' + item.ticket_price + ' </p> </div> </div> <hr> </div> ');
+                       })
+                   }
+
+               }).fail(function () {
+                   $('.notif_ticket').append('<h3 class="text-muted">Ticket tidak tersedia</h3>');
+               });
+           });
          
        }); 
        </script> 
-       {{-- BETA SCRIPT DATE GALANG --}}
-       <script>   
-       
-      // $(document).ready(function () {
-      //   showTicket('2022-08-18');
-      // });
-
-      //   function showTicket(date){
-
-      //     $('.ticketitem').empty();
-      //      $.ajaxSetup({
-      //        headers : {'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')}
-      //     })
-          
-      //     $.ajax({
-      //         url: "{{ route('ticket') }}",
-      //         type: 'POST',
-      //         data: {
-      //             tanggal: date
-      //         },
-      //         cache: false,
-      //         dataType: 'json',
-      //         success: function (result) {
-      //             // var obj = JSON.parse(result);
-      //             var datas = result.data; //datas prop is an array
-      //             for (var i = 0; i < datas.length; i++) {
-      //                 console.log(datas[i].ticket_name);
-
-      //                 // $('.ticketitem').append('<div class="card-body"> <div class="items"> <p class="ticket-title">Tiket Wahana Rumah Hantu Weekday</p> <br> <!-- <input type="hidden" class="price" name="ticket_price[1]" value="30000"> --> <p class="ticket-description"> <i class="bi bi-clock"></i> 17 Agustus 2022 , 16.00 - 22.00 WIB </p> <div class="readmore"> <p class="ticket-description">Syarat dan ketentuan</p> <ol> <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li> <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li> <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li> <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li> </ol> </div> <br> <div class="d-flex flex-row-reverse bd-highlight"> <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;"> <div class="input-group input-group-sm"> <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled" data-type="minus" data-field="quant[1]"> <i class="bx bx-minus"></i> </button> <input type="text" name="quant[1]" class="form-control input-sm input-number qt" value="0" min="0" max="10"> <input type="hidden" name="id_ticket[1]" value="tkt1"> <input type="hidden" name="price[1]" class="input-number price" value="300000"> <input type="hidden" name="fullprice[1]" class="input-number full-price" value="0"> <button class="btn btn-outline-primary btn-number" data-type="plus" data-field="quant[1]"> <i class="bx bx-plus"></i> </button> </div> </div> <div class="p-2 bd-highlight showButton" id="show_button" style="display:none;"><button id="btn_add" class="btn btn-primary ml-2">Tambah</button></div> <div class="p-2 bd-highlight"><p class="mr-2">Rp.30.000 </p> </div> </div> </div> </div> <hr>')
-      //             }
-      //             // console.log(result);
-      //         }
-
-      //     });
-        
-                   
-      //   }
-
-        </script>
-       <script>
-        // axios vue
-           new Vue({
            
-               el: '#app',
-               data() {
-                   const now = new Date(2022, 7, 17)
-                   const later = new Date(2022, 8, 30)
-                   return {
-                       tickets : {},
-                       days: [],
-                       selectedDate: null,
-                       availableDates: [{
-                           start: now,
-                           end: later
-                       }],
-                       modelConfig: {
-                           type: 'string',
-                           mask: 'DD-MM-YYYY', // Uses 'iso' if missing
-                       },
-                   }
-               }, 
-               //test script on select date!
-              methods: {
-                //  moment: function () {
-                //     return moment();
-                //   }
-                onDayClick(day) {
-                const idx = this.days.findIndex(d => d.id === day.id);    
-                const element = document.getElementById('#item_tiket');
-                const tanggal = { tanggal: day.id };
-                          axios.post('{{ route('ticket') }}',tanggal)
-                              .then((response)=>{
-                               $('.ticketitem').html('<div class="card-body"> <div class="items"> <p class="ticket-title">Tiket Wahana Rumah Hantu Weekday</p> <br> <!-- <input type="hidden" class="price" name="ticket_price[1]" value="30000"> --> <p class="ticket-description"> <i class="bi bi-clock"></i> 17 Agustus 2022 , 16.00 - 22.00 WIB </p> <div class="readmore"> <p class="ticket-description">Syarat dan ketentuan</p> <ol> <li class="ticket-description"><p >Tiket hanya berlaku sesuai kebijakan</p></li> <li class="ticket-description"><p>Tiket masuk belum termasuk tiket konser</p></li> <li class="ticket-description"><p>Tiket berlaku 1 kali kunjungan</p></li> <li class="ticket-description"><p>Tiket tidak dapat dikembalikan (non refundable)</p></li> </ol> </div> <br> <div class="d-flex flex-row-reverse bd-highlight"> <div class="p-2 bd-highlight qtyControl" style="width: 115px !important;"> <div class="input-group input-group-sm"> <button class="btn btn-outline-primary btn-number" type="button" disabled="disabled" data-type="minus" data-field="quant[1]"> <i class="bx bx-minus"></i> </button> <input type="text" name="quant[1]" class="form-control input-sm input-number qt" value="0" min="0" max="10"> <input type="hidden" name="id_ticket[1]" value="tkt1"> <input type="hidden" name="price[1]" class="input-number price" value="300000"> <input type="hidden" name="fullprice[1]" class="input-number full-price" value="0"> <button class="btn btn-outline-primary btn-number" data-type="plus" data-field="quant[1]"> <i class="bx bx-plus"></i> </button> </div> </div> <div class="p-2 bd-highlight showButton" id="show_button" style="display:none;"><button id="btn_add" class="btn btn-primary ml-2">Tambah</button></div> <div class="p-2 bd-highlight"><p class="mr-2">Rp.30.000 </p> </div> </div> </div> </div> <hr>');
-                                // element.innerHTML = response.data.data;
-                               console.log(response.data.data);
-                              })
-                                      
-                // alert(day.id);
-              },
-            }
-           })
-    </script>
-
     <script type="application/javascript">
       $('#btn_payment').click(function(e){
-        $('.panel_ticket').attr("style", "display: none !important");        
-        $('#payment_panel').show(); 
+        $('.panel_ticket').attr("style", "display: none !important");
+        $('#payment_panel').show();
         
           $('html, body').animate({
               scrollTop: $("#features").offset().top
@@ -900,12 +661,45 @@
           e.preventDefault();
           var target = $(this).attr('href');
             $('.panel_ticket').attr("style", "display: ");
-            $('#payment_panel').hide();         
+            $('#payment_panel').hide();  
+            $('#btn_lanjutkan').attr('disabled', true);
+            $('input:radio').prop('checked', false);
+
         });
+    </script>
+
+    <script>
+    $(document).ready(function() { 
+      
+      $('#pesanticket').on('submit', function (e) {
+                  console.log('harusnya kepencet')
+                  e.preventDefault();
+                  $.ajaxSetup({
+                    headers: {
+                        "X-CSRFToken": $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                  $.ajax({
+                      url: "{{ route('pesanticket') }}",
+                      type: "POST",
+                      data: $('#pesanticket').serialize(),
+                      success: function (response) {
+                          
+                          alert('Ajax form has been submitted successfully');
+                          document.getElementById("pesanticket").reset();
+                      }
+                  });
+               
+          });
+      });
+      
     </script>
 
     
     <script src="{{ asset('js/btnEvent.js') }}"></script> 
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script> 
+    <script src="{{ asset('js/locales/bootstrap-datepicker.id.min.js') }}"></script> 
+
 
     <!-- END REQUIREMENT KALENDER AND TIKETING -->
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>

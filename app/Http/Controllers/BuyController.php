@@ -7,6 +7,7 @@ use App\Models\Orders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Services\Midtrans\CreateSnapTokenService;
+use App\Helpers\JsonFormatter;
 
 class BuyController extends Controller
 {
@@ -17,12 +18,55 @@ class BuyController extends Controller
      */
     public function index()
     {
-        //
+        // $id = 'RHD-'.Str::upper(Str::random(4)."-".Str::random(4));
+
+        // $midtrans = new CreateSnapTokenService($id);
+        // $snapToken = $midtrans->getSnapToken($id);
+
+        return view('buy_ticket_jquery');
+    }
+
+    public function dummy()
+    {
+        $id = 'RHD-'.Str::upper(Str::random(4)."-".Str::random(4));
+        $midtrans = new CreateSnapTokenService($id);
+        $snapToken = $midtrans->getSnapToken($id);
+
+        return view('buy_ticket_jquery',compact('snapToken'));
+    }
+
+    public function vue()
+    {
+         //
         $id = 'RHD-'.Str::upper(Str::random(4)."-".Str::random(4));
         $midtrans = new CreateSnapTokenService($id);
         $snapToken = $midtrans->getSnapToken($id);
 
         return view('buy_ticket',compact('snapToken'));
+    }
+
+    public function payment($order_id)
+    {
+        //  $validatedData =  $request->validate([
+        //     'order_id' => 'required',            
+        // ]);
+
+        $order_data = Orders::where('order_code','=',$order_id)->first();
+        $order_items = Order_items::where('order_codes','=',$order_id)->get();
+        // $order_data = Orders::where('order_code','=',$validatedData['order_id'])->first();
+        // $order_items = Order_items::where('order_codes','=',$validatedData['order_id'])->get();
+
+        if($order_data)
+        {
+            //echo 'data ada';
+            $midtrans = new CreateSnapTokenService($order_id);
+            $snapToken = $midtrans->getSnapToken($order_id);
+            return view('payment_ticket',compact('snapToken','order_data','order_items'));
+        } else {
+            echo 'tidak ada data';
+        }
+
+      
     }
 
     /**
@@ -44,9 +88,7 @@ class BuyController extends Controller
     public function store(Request $request)
     {
 
-        $order_id = 'RHD-'.Str::upper(Str::random(4)."-".Str::random(4));
-
-         $validatedData =  $request->validate([
+        $validatedData =  $request->validate([
             'cust_email' => 'required|email:rfc,dns',
             'cust_phone' => 'required|numeric',
             'cust_firstname' => 'required',
@@ -54,13 +96,17 @@ class BuyController extends Controller
             'gender' => 'required',            
             'cust_agree' => 'required',
             'grand_total' => 'required',
-            'total_qty' => 'required',
-            'payment_method' => 'required',  
+            'total_qty' => 'required',            
+            'payment_method' => 'required', 
+            'id_ticket' => 'required',
+            'ticket_date' => 'required',
             'admin_fee' => 'required',                         
         ]);
-        
 
-       $orders = Orders::create([
+        //panggil fungsi generate code, check ke database
+         $order_id = $this->generate_code('RHD');
+
+         $orders = Orders::create([
             'order_code' => $order_id,
             'customer_email' =>  $validatedData['cust_email'] ,
             'customer_name' => $validatedData['cust_firstname']." ".$validatedData['cust_lastname'],
@@ -71,34 +117,59 @@ class BuyController extends Controller
             'payment_status' => 'pending',
             'payment_code' => 201,
             'payment_method' => $validatedData['payment_method'],
+            'admin_fee' => $validatedData['admin_fee'],
+            'ticket_date' => $validatedData['ticket_date'],
             'expired_time' => '2022-09-18 10:34:09.000',
         ]);
 
-
-        if(!$orders){
-            echo 'teu asup nya';
-        } else {
-            // Masukan data ke tabel order_items
-            foreach($request['id_tiket'] as $key => $value )
-            {
-                // echo "{$key} => {$value} ";
-                // print_r($request['id_tiket']);
-                 if($request['qty'][$key] != 0){
-                    Order_items::Create([
+        if($orders){
+            foreach($request['id_ticket'] as $key => $value )
+            {               
+                //jika quantiti tiket ! = 0 maka insert ke tabel
+                 if($request['quant'][$key] != 0){
+                    for($i=1; $i <= $request['quant'][$key]; $i++)
+                    {
+                        //baris sesuai jumlah total tiket
+                        Order_items::Create([
                                         'order_codes' => $order_id,
-                                        'ticket_id' => $request['id_tiket'][$key],
+                                        'ticket_id' => $request['id_ticket'][$key],
                                         'ticket_name' => $request['ticket'][$key],
                                         'ticket_price' => $request['price'][$key],
-                                        'qty' => $request['qty'][$key],
+                                        'qty' => 1,
                                         'status' => 'unclaimed',              
                                     ]); 
-                    echo 'data udah masuk bos';
-                }
-            }           
-            
-        }
-        
+                    }
+                    //ini kalo qty langsung 1 baris qty banyak
+                    // Order_items::Create([
+                    //                     'order_codes' => $order_id,
+                    //                     'ticket_id' => $request['id_ticket'][$key],
+                    //                     'ticket_name' => $request['ticket'][$key],
+                    //                     'ticket_price' => $request['price'][$key],
+                    //                     'qty' => $request['quant'][$key],
+                    //                     'status' => 'unclaimed',              
+                    //                 ]); 
+                    // echo 'data sudah masuk!';
+                }                
+            }
 
+             return JsonFormatter::createApi(200,'Success',$order_id);
+
+
+        } else {
+                echo 'Data tidak berhasil diinsert!';                        
+                return JsonFormatter::createApi(400,'Failed',$order_id);
+            }                                                  
+    }
+
+    public function generate_code($code)
+    {
+        $order_id = Str::upper($code)."-".Str::upper(Str::random(4)."-".Str::random(4));
+        $row = Orders::where('order_code', '=', $order_id)->first();
+        if($row) {
+           $this->generate_code($code);
+        } else {
+            return  $order_id;
+        }
     }
 
     /**

@@ -163,7 +163,7 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                                     fee = total_harga *  0.027;
                                 }
                                 var grand_total = parseFloat(total_harga + parseFloat(fee));
-                                $("#biaya_admin").val(this.value);
+                                $("#biaya_admin").val(fee);
                                 $(".admin_fee span").html("Biaya admin Rp."+ fee);
                                 $(".grand span").html("Grand total Rp."+ grand_total);
                                 $("#grand_total").val(grand_total);

@@ -25,7 +25,9 @@ class Orders extends Model
         'grand_total',
         'payment_status',
         'payment_code',
+        'admin_fee',
         'expired_time',
+        'ticket_date',
     ];
 
     use HasFactory;
