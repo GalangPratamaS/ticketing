@@ -64,6 +64,8 @@ class CreateSnapTokenService extends Midtrans
     $bank_transfer = ["bri_epay", "echannel", "permata_va",
     "bca_va", "bni_va", "bri_va", "other_va"];
 
+    $qris = ["gopay","shopeepay"];
+
     if( $order_data['payment_method'] == "bank_transfer")
     {
         $metode_payment = $bank_transfer;
@@ -71,7 +73,7 @@ class CreateSnapTokenService extends Midtrans
     {
         $metode_payment = $cc;
     } else {
-
+        $metode_payment = $qris;
     }
         
 

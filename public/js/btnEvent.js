@@ -160,7 +160,7 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                                     fee = total_harga *  0.03;
                                 }
                                 else {
-                                    fee = total_harga *  0.027;
+                                    fee = total_harga *  0.03;
                                 }
                                 var grand_total = parseFloat(total_harga + parseFloat(fee));
                                 $("#biaya_admin").val(fee);

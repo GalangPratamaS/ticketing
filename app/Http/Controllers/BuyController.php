@@ -23,7 +23,8 @@ class BuyController extends Controller
         // $midtrans = new CreateSnapTokenService($id);
         // $snapToken = $midtrans->getSnapToken($id);
 
-        return view('buy_ticket_jquery');
+        return view('buy_singlepage');
+        // return view('buy_ticket_jquery');
     }
 
     public function dummy()

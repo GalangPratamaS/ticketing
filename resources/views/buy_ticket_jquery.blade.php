@@ -298,6 +298,16 @@
                                   </div>
                               </label>
                           </div>
+                           <div class='col col-md-3 text-center'>
+                              <input type="radio" name="payment_method" id="qris" class="d-none imgbgchk"
+                                  value="qris">
+                              <label for="qris"><small>QRIS (Gopay / ShopeePay</small>
+                                  <img src="{{ asset('icon/layanan qris.png') }}" alt="Image 2">
+                                  <div class="tick_container">
+                                      <div class="tick"><i class="bi bi-check"></i></div>
+                                  </div>
+                              </label>
+                          </div>
                       </div>
 
                       <input type="hidden"  name="total_price" id="total_price" value="0"> 
@@ -348,76 +358,7 @@
                   </div>
                 
                 
-                <!-- end payment chanel  -->
-
-                <div class="card-body" id="panel_payment2" style="display: none;">
-                  <div class="row">
-                    <div class="col-md-4">
-                      Nomor Pesanan
-                    </div>
-                    <div class="col-md-6">
-                    : V30226-2BBF3FC-943
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4">
-                      Email Pembeli
-                    </div>
-                    <div class="col-md-6">
-                     : galangpr@gmail.com
-                    </div>
-                  </div>
-                  <small class="text-primary">*Informasi dikirimkan ke email</small>
-                
-                <hr>
-
-                {{-- <div class="card-body">
-                  Pilih Metode pembayaran
-
-                    <div class="row">
-                     <div class='col col-md-3 text-center'>
-                       <input type="radio" v-model="form.payment_method" name="payment_method" id="bank_transfer" class="d-none imgbgchk" value="5000">
-                       <label for="bank_transfer"><small>bank transfer</small>
-                         <img src="{{ asset('icon/banktficon.png') }}" alt="Image 1">
-                         <div class="tick_container">
-                           <div class="tick"><i class="bi bi-check"></i></div>
-                         </div>
-                       </label>
-                     </div>
-                     <div class='col col-md-3 text-center'>
-                       <input type="radio" v-model="form.payment_method" name="payment_method" id="credit_card" class="d-none imgbgchk" value="">
-                       <label for="credit_card"><small>kartu kredit</small>
-                         <img src="{{ asset('icon/creditcard.png') }}" alt="Image 2">
-                         <div class="tick_container">
-                           <div class="tick"><i class="bi bi-check"></i></div>
-                         </div>
-                       </label>
-                     </div>
-                 
-                   </div>
-
-                </div>
-                --}}
-
-                <div class="card-footer">
-                   <div class="d-flex justify-content-between bd-highlight">     
-                      <div class="p-2 flex-grow-1 bd-highlight all_qty">Subtotal (<span style="font-style: italic;"></span> Tiket)</div>
-                      <div class="p-2 bd-highlight total">Total tiket Rp. <span style="font-style: bold;">Total tiket Rp.</span></div>
-                      
-                    </div>
-                    <div class="d-flex justify-content-end bd-highlight">                      
-                      <div class="p-2 bd-highlight admin_fee"> <span style="font-style: bold;">Biaya Admin Rp. </span></div>                      
-                    </div>
-                     <div class="d-flex justify-content-end bd-highlight">                      
-                      <div class="p-2 bd-highlight grand"> <span style="font-style: bold;"> Grand total Rp. </span></div>
-                    </div>
-                    
-                    <div class="d-flex justify-content-end bd-highlight">                     
-                      <div class="p2 bd-highlight"><button class="ticket_btn" id="btn_checkout">Beli Tiket</button></div>
-                    </div>
-                </div> 
-
-                </div>
+               
                
                 
               </div>

@@ -1,9 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald');
+@import url('https://fonts.googleapis.com/css?family=Poppins');
 * {
     margin: 0;
     padding: 0;
     border: 0;
     box-sizing: border-box
+}
+
+body{
+    background: #9ab3f5;
+    font-family: 'Poppins';
 }
 
 .fl-left {
@@ -249,3 +254,17 @@
             width: 40px;
             border-radius: 100%;
         }
+
+        .wrapper {
+            background-color: #f4f2f7;
+            margin: 20px auto;
+            max-width: fit-content;
+            padding: 15px 20px;
+            border-radius: 10px;
+        }
+
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
