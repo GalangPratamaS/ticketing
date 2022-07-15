@@ -47,17 +47,12 @@ class CreateSnapTokenService extends Midtrans
                     'quantity' => 1,
                     'name' => 'Biaya penanganan'
                 ];
-        
-    //    $order[] += ['id' => '123131',
-    //                 'price' => 30000,
-    //                 'quantity' => 2,
-    //                 'name' => 'Tiket Rumah Hantu Week Day'
-    //             ];
+            
 
-        $enabled_payment = ["credit_card", "cimb_clicks",
-    "bca_klikbca", "bca_klikpay", "bri_epay", "echannel", "permata_va",
-    "bca_va", "bni_va", "bri_va", "other_va", "gopay", "indomaret",
-    "danamon_online"];
+    //     $enabled_payment = ["credit_card", "cimb_clicks",
+    // "bca_klikbca", "bca_klikpay", "bri_epay", "echannel", "permata_va",
+    // "bca_va", "bni_va", "bri_va", "other_va", "gopay", "indomaret",
+    // "danamon_online"];
 
     $cc = ['credit_card'];
 
@@ -75,26 +70,17 @@ class CreateSnapTokenService extends Midtrans
     } else {
         $metode_payment = $qris;
     }
-        
-
-        // $item_details = ['item_details' => $invoice_details];    
-        // dd($item_details);
+              
         $customer = [
                 'first_name' => $order_data['customer_name'],
                 'email' => $order_data['customer_email'],
                 'phone' => $order_data['customer_phone']
             ];
-
-       
-
-        // $params['payment_type'] = 'credit_card';
+               
         $params['transaction_details'] = $transaction_details;
         $params['item_details'] = $order;
         $params['enabled_payments'] = $metode_payment;
-        $params['customer_details'] = $customer;    
-        
-        
-        // dd($params);
+        $params['customer_details'] = $customer;                            
        
         $snapToken = Snap::getSnapToken($params);
  
