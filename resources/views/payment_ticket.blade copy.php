@@ -6,7 +6,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Pekan Raya Karawang</title>
-  <meta content="beli tiket pekan raya karawang" name="description">
+  <meta content="beli tiket rumah hantu" name="description">
   <meta content="beli tiket" name="keywords">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 
@@ -54,9 +54,9 @@
             <div class="card" style="width: auto;">   
               <div class="card-header">
                 <div class="d-flex justify-content-between">
-                  <div class="row"><h2>Tiket Online pekan raya karawang</h2>
-                  <small>Tiket Online Pekan Raya Karawang</small></div>
-                  <img class="rounded" src="{{ asset('img/logo_prk.png') }}" alt="" style="width: 50px;height: 50px;" >
+                  <div class="row"><p>Rumah Hantu Drive Thru</p>
+                  <small>Rumah hantu festive walk karawang</small></div>
+                  <img class="rounded" src="{{ asset('img/rumahhantujkt.jpg') }}" alt="" style="width: 50px;height: 50px;" >
                 </div>
                 
               </div>
@@ -92,7 +92,7 @@
                 <div class="ticket_selected">
                       <div class="row">
                       @foreach($order_items as $order_item)
-                        <div class="col-md-6 col-sm-6"><p class="text-black">{{ $order_item['ticket_name'] ." ".TanggalIndo::tgl_indo($order_data->ticket_date) }}</p></div>                      
+                        <div class="col-md-6 col-sm-6"><p class="text-black">{{ $order_item['ticket_name'] }}</p></div>                      
                         <div class="col-md-4 col-sm-4"><p class="text-black"> x {{ $order_item['qty'] }}</p></div>                                              
                       @endforeach
                       </div>

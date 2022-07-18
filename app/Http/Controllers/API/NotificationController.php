@@ -61,7 +61,7 @@ class NotificationController extends Controller
         $status = 0;
       }
 
-    } else {
+    } else if($data['payment_type'] == "bank_transfer"){
       // bank transfer
 
       if ($data['transaction_status'] == "settlement") {
@@ -91,6 +91,9 @@ class NotificationController extends Controller
         $bank = "Bank Mandiri";
         $virtual_account = $data["bill_key"];
       }
+    } else {
+      $bank = $data["acquirer"];
+      
     }
 
     // $update_trx = MTransaksiDetailAkademik::where('kode_transaksi_detail', $data['order_id'])

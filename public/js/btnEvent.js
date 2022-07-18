@@ -137,7 +137,7 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                       if (prices == 0) {
                           fullPrice = 0;
                       }
-                      cc = fullPrice * 0.03;
+                      cc = fullPrice * 0.03 + 1665;
 
                       $('#total_price').val(fullPrice);
                       console.log('biaya cc = ' + cc);
@@ -157,9 +157,10 @@ $(document.body).on('click', 'button.btn-number', function(e) {
                                 if(payment === 'bank_transfer'){
                                     fee = 5000;
                                 } else if(payment === 'credit_card') {
-                                    fee = total_harga *  0.03;
+                                    fee = total_harga *  0.03 + 1665;
                                 }
                                 else {
+                                    //qris gopay
                                     fee = total_harga *  0.03;
                                 }
                                 var grand_total = parseFloat(total_harga + parseFloat(fee));

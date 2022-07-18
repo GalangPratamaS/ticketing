@@ -39,7 +39,7 @@ class CreateSnapTokenService extends Midtrans
             $order[] = ['id' => $oi['id'],
                         'price' => (int)round($oi['ticket_price']),
                         'quantity' => $oi['qty'],
-                        'name' => $oi['ticket_name']
+                        'name' => $oi['ticket_name']." ".$this->tanggal_indo($order_data['ticket_date'])
                 ];    
         }
           $order[] = ['id' => '100',
@@ -59,7 +59,7 @@ class CreateSnapTokenService extends Midtrans
     $bank_transfer = ["bri_epay", "echannel", "permata_va",
     "bca_va", "bni_va", "bri_va", "other_va"];
 
-    $qris = ["gopay","shopeepay"];
+    $qris = ["gopay"];
 
     if( $order_data['payment_method'] == "bank_transfer")
     {
@@ -85,5 +85,31 @@ class CreateSnapTokenService extends Midtrans
         $snapToken = Snap::getSnapToken($params);
  
         return $snapToken;
+    }
+
+    private function tanggal_indo($tanggal)
+    {
+	$bulan = array (
+		1 =>   'Januari',
+		'Februari',
+		'Maret',
+		'April',
+		'Mei',
+		'Juni',
+		'Juli',
+		'Agustus',
+		'September',
+		'Oktober',
+		'November',
+		'Desember'
+	);
+	$pecahkan = explode('-', $tanggal);
+	
+	// variabel pecahkan 0 = tanggal
+	// variabel pecahkan 1 = bulan
+	// variabel pecahkan 2 = tahun
+ 
+	return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+
     }
 }

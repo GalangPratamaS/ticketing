@@ -66,9 +66,10 @@ class BuyController extends Controller
         } else {
             echo 'tidak ada data';
         }
-
       
     }
+
+    
 
     /**
      * Show the form for creating a new resource.

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Festive Walk Karawang</title>
+  <title>Pekan Raya Karawang</title>
   <meta content="beli tiket rumah hantu" name="description">
   <meta content="beli tiket" name="keywords">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -42,21 +42,16 @@
 <body>
 <div class="wrapper">   
       <div class="container">
-        <div class="row content">
-
-        <div class="section-title" data-aos="fade-up">
-          <h2>Beli Tiketnya</h2>
-          <p>Beli tiket rumah hantu</p>
-        </div>
+        <div class="row content">        
 
         <div class="row" data-aos="fade-left">
           <div class="d-flex justify-content-center">
             <div class="card" style="width: auto;">   
               <div class="card-header">
                 <div class="d-flex justify-content-between">
-                  <div class="row"><p>Rumah Hantu Drive Thru</p>
-                  <small>Rumah hantu festive walk karawang</small></div>
-                  <img class="rounded" src="{{ asset('img/rumahhantujkt.jpg') }}" alt="" style="width: 50px;height: 50px;" >
+                  <div class="row"><h2>Pekan Raya Karawang</h2>
+                  <small>Tiket Online Pekan Raya Karawang</small></div>
+                  <img class="rounded" src="{{ asset('img/logo_prk.png') }}" alt="" style="width: 50px;height: 50px;" >
                 </div>
                 
               </div>
@@ -108,7 +103,7 @@
                   <div class="row g-3">
                     <div class="col-md-12">
                       <label for="inputEmail4" class="form-label">Email</label>
-                      <input type="email" name="cust_email" class="form-control" id="inputEmail4" required>
+                      <input type="email" name="cust_email" placeholder="masukan email" class="form-control" id="inputEmail4" required>
                     </div>                    
                     <div class="col-12">
                       <label for="phoneNumber" class="form-label">Nomor Handphone</label>
@@ -219,7 +214,7 @@
                       <div class="p-2 flex-grow-1 bd-highlight"><a href="#featured" class="scrollTok"> <i class='bx bx-arrow-back'></i> Kembali</a></div>
                       
                       <div class="p2 bd-highlight">
-                        <button  type="submit" class="btn btn-primary">Checkout</button>
+                        <button  type="submit" id="btn_checkout" class="btn btn-primary">Checkout</button>
                         </form>
                       </div>
                     </div>
@@ -229,7 +224,12 @@
               </div>
           
            </div>
-          </div>          
+          </div>    
+          
+          <div class="section-title" >
+          <h2 class="text-center text-white">Pekan Raya Karawang</h2>
+          <p class="text-center text-white">Powered By Galuh Mas Karawang</p>
+        </div>
           
         </div>
       </div>
@@ -342,6 +342,7 @@
       $('#pesanticket').on('submit', function (e) {
                   //checkout ticket
                   e.preventDefault();
+                  $('#btn_checkout').attr('disabled', true);
                   $.ajaxSetup({
                     headers: {
                         "X-CSRFToken": $('meta[name="csrf-token"]').attr('content')
@@ -352,7 +353,7 @@
                       type: "POST",
                       data: $('#pesanticket').serialize(),
                       success: function (response) {                          
-                          alert('Berhasil checkout dengan '+response.data);
+                          // alert('Berhasil checkout dengan '+response.data);
                           document.getElementById("pesanticket").reset();
                           window.location.href = "{{ url('payment') }}/"+response.data;
                           // $.redirect('{{ url("payment") }}', {'order_id': response.data, "X-CSRFToken" : $('meta[name="csrf-token"]').attr('content')});
