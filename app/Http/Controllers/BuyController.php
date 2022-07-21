@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Services\Midtrans\CreateSnapTokenService;
 use App\Helpers\JsonFormatter;
+use Carbon\Carbon;
 
 class BuyController extends Controller
 {
@@ -18,53 +19,34 @@ class BuyController extends Controller
      */
     public function index()
     {
-        // $id = 'RHD-'.Str::upper(Str::random(4)."-".Str::random(4));
 
-        // $midtrans = new CreateSnapTokenService($id);
-        // $snapToken = $midtrans->getSnapToken($id);
-
-        return view('buy_singlepage');
-        // return view('buy_ticket_jquery');
+        return view('ticketing/buy_singlepage');
     }
 
-    public function dummy()
-    {
-        $id = 'RHD-'.Str::upper(Str::random(4)."-".Str::random(4));
-        $midtrans = new CreateSnapTokenService($id);
-        $snapToken = $midtrans->getSnapToken($id);
-
-        return view('buy_ticket_jquery',compact('snapToken'));
-    }
-
-    public function vue()
-    {
-         //
-        $id = 'RHD-'.Str::upper(Str::random(4)."-".Str::random(4));
-        $midtrans = new CreateSnapTokenService($id);
-        $snapToken = $midtrans->getSnapToken($id);
-
-        return view('buy_ticket',compact('snapToken'));
-    }
 
     public function payment($order_id)
-    {
-        //  $validatedData =  $request->validate([
-        //     'order_id' => 'required',            
-        // ]);
+    {       
 
         $order_data = Orders::where('order_code','=',$order_id)->first();
+        
         $order_items = Order_items::where('order_codes','=',$order_id)->get();
-        // $order_data = Orders::where('order_code','=',$validatedData['order_id'])->first();
-        // $order_items = Order_items::where('order_codes','=',$validatedData['order_id'])->get();
+       
 
-        if($order_data)
+        if($order_data->payment_status == '')
         {
-            //echo 'data ada';
+            //status belum bayar
             $midtrans = new CreateSnapTokenService($order_id);
             $snapToken = $midtrans->getSnapToken($order_id);
             return view('payment_ticket',compact('snapToken','order_data','order_items'));
+        } else if($order_data->payment_status == 'PENDING'){
+            //pending payment
+             return view('pending_payment',compact('order_data','order_items'));
+        } else if($order_data->payment_status == 'SETTLEMENT'){
+            //
+             return view('finish_payment',compact('order_data','order_items'));
         } else {
-            echo 'tidak ada data';
+            //if canceled transaction
+
         }
       
     }
@@ -106,7 +88,11 @@ class BuyController extends Controller
         ]);
 
         //panggil fungsi generate code, check ke database
-         $order_id = $this->generate_code('RHD');
+         $order_id = $this->generate_code('PRK');
+
+            $date = Carbon::now();
+            $expired_time = Carbon::parse($date);
+            $expired_time->addHours(2);
 
          $orders = Orders::create([
             'order_code' => $order_id,
@@ -116,12 +102,11 @@ class BuyController extends Controller
             'cust_gender' => $validatedData['gender'],
             'total_ticket' => $validatedData['total_qty'],
             'grand_total' => $validatedData['grand_total'],
-            'payment_status' => 'pending',
-            'payment_code' => 201,
+            'payment_status' => '',            
             'payment_method' => $validatedData['payment_method'],
             'admin_fee' => $validatedData['admin_fee'],
             'ticket_date' => $validatedData['ticket_date'],
-            'expired_time' => '2022-09-18 10:34:09.000',
+            'expired_time' => $expired_time,
         ]);
 
         if($orders){

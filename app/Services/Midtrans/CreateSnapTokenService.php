@@ -29,7 +29,7 @@ class CreateSnapTokenService extends Midtrans
         $order_items = Order_items::where('order_codes','=',$order_id)->get();
 
         $transaction_details = ['order_id' => $order_data['order_code'] ,
-         'gross_amount' => (int)round($order_data['grand_total'])];
+                                'gross_amount' => (int)round($order_data['grand_total'])];
 
         // $transaction_details = [
         //         'order_id' => $order_id,

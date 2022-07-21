@@ -44,18 +44,13 @@ class TicketingController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $validatedData = $request->validate([
-            'passkey' => 'required',
-            'email' => 'email|required|unique:user',
-            'password' => 'required|confirmed'
-        ]);
-
+       
         try {
             $request->validate([
                 'passkey' => 'required',
                 'ticket' => 'ticketname'
             ]); 
+
             $ticket = Ticket::create([
                 'ticket_name' => $request->nama_ticket,
                 'ticket_price' => $request->harga,
@@ -66,7 +61,7 @@ class TicketingController extends Controller
 
             $data = Ticket::where('id','=',$ticket->id)->get();
             if($data) {
-            return JsonFormatter::createApi(200,'Success',$data);
+                return JsonFormatter::createApi(200,'Success',$data);
                 } else {
                     return JsonFormatter::createApi(400,'Failed');
                 }

@@ -45,8 +45,8 @@
         <div class="row content">
 
         <div class="section-title" data-aos="fade-up">
-          <h2 class="text-center">Pekan Raya Karawang</h2>
-          <p class="text-center">Powered By Galuh Mas Karawang</p>
+          <h2 class="text-center text-white">Pekan Raya Karawang</h2>
+          <p class="text-center text-white">Powered By Galuh Mas Karawang</p>
         </div>
 
          <div class="row" data-aos="fade-left">
@@ -64,25 +64,28 @@
 
                 <div class="card-body" id="panel_payment2">
                   <div class="row">
-                    <div class="col-md-4">
-                      Selesaikan pesanan anda dalam :
+                    <div class="col-12 col-sm-6 col-md-6">
+                      Selesaikan pesanan anda sebelum :
                     </div>
-                    <div class="col-md-6"> {{ $order_data->expired_time }}</div>
+                    <div class="col-12 col-sm-6 col-md-6"> {{                     
+                    Carbon\Carbon::parse($order_data->expired_time)->translatedFormat('l jS F Y H:i:s');}} </div>
+                    
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-4 col-sm-4 col-md-4">
+                      <small>Nomor Pesanan</small>
+                    </div>
+                    <div class="col-8 col-sm-6 col-md-6">
+                    <small>: {{ $order_data->order_code }}</small> 
+                    </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-4">
-                      Nomor Pesanan
+                    <div class="col-4 col-sm-4 col-md-4">
+                     <small> Email Pembeli </small>
                     </div>
-                    <div class="col-md-6">
-                    : {{ $order_data->order_code }}
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4">
-                      Email Pembeli
-                    </div>
-                    <div class="col-md-6">
-                     : {{$order_data->customer_email }}
+                    <div class="col-8 col-sm-6 col-md-6">
+                    <small> : {{$order_data->customer_email }} </small>
                     </div>
                   </div>
                   <small class="text-primary">*Informasi dikirimkan ke email</small>
@@ -92,27 +95,27 @@
                 <div class="ticket_selected">
                       <div class="row">
                       @foreach($order_items as $order_item)
-                        <div class="col-md-6 col-sm-6"><p class="text-black">{{ $order_item['ticket_name'] ." ".TanggalIndo::tgl_indo($order_data->ticket_date) }}</p></div>                      
-                        <div class="col-md-4 col-sm-4"><p class="text-black"> x {{ $order_item['qty'] }}</p></div>                                              
+                        <div class="col-6 col-md-6 col-sm-6"><small class="text-black">{{ $order_item['ticket_name'] ." - ".TanggalIndo::tgl_indo($order_data->ticket_date) }}</small></div>                      
+                        <div class="col-4 col-md-4 col-sm-4"><small class="text-black"> x {{ $order_item['qty'] }}</small></div>                                              
                       @endforeach
                       </div>
                       <div class="row">
-                        <p class="ticket-description"> <i class="bi bi-clock"></i>  {{ $order_data->ticket_date }} , 16.00 - 22.00 WIB  </p>
+                        <p class="ticket-description"> <i class="bi bi-clock"></i>  {{ TanggalIndo::tgl_indo($order_data->ticket_date) }} , 16.00 - 22.00 WIB  </p>
                       </div>
                     </div>
                                 
 
                 <div class="card-footer">
                    <div class="d-flex justify-content-between bd-highlight">     
-                      <div class="p-2 flex-grow-1 bd-highlight all_qty">Jumlah tiket (<span style="font-style: italic;">{{ $order_data->total_ticket }}</span> Tiket)</div>
-                      <div class="p-2 bd-highlight total">Subtotal <span style="font-style: bold;">Rp. {{ $order_data->grand_total - $order_data->admin_fee }}</span></div>
+                      <div class="p-2 flex-grow-1 bd-highlight all_qty"> <small>Jumlah tiket (<span style="font-style: italic;">{{ $order_data->total_ticket }}</span> Tiket)</small></div>
+                      <div class="p-2 bd-highlight total"> <small>Subtotal <span style="font-style: bold;">Rp. {{ $order_data->grand_total - $order_data->admin_fee }}</span></small></div>
                       
                     </div>
                     <div class="d-flex justify-content-end bd-highlight">                      
-                      <div class="p-2 bd-highlight admin_fee"> <span style="font-style: bold;">Biaya Admin Rp.{{$order_data->admin_fee}} </span></div>                      
+                      {{-- <div class="p-2 bd-highlight admin_fee"><small> <span style="font-style: bold;">Biaya Penanganan Rp.{{$order_data->admin_fee}} </span> </small></div>                       --}}
                     </div>
                      <div class="d-flex justify-content-end bd-highlight">                      
-                      <div class="p-2 bd-highlight grand"> <span style="font-style: bold;"> Grand total Rp. {{$order_data->grand_total}}</span></div>
+                      {{-- <div class="p-2 bd-highlight grand"><small> <span style="font-style: bold;"> Grand total Rp. {{$order_data->grand_total}}</span></small></div> --}}
                     </div>
                     
                     <div class="d-flex justify-content-end bd-highlight">                     
@@ -165,12 +168,14 @@
             snap.pay('{{ $snapToken }}', {
                 // Optional
                 onSuccess: function(result) {
+                   window.location.href = "{{ url('finish') }}/"+result.order_id;
                     /* You may add your own js here, this is just example */
                     // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                     console.log(result)
                 },
                 // Optional
                 onPending: function(result) {
+                   window.location.href = "{{ url('pending') }}/"+result.order_id;
                     /* You may add your own js here, this is just example */
                     // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                     console.log(result)

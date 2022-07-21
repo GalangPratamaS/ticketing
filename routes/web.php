@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('ticket/','App\Http\Controllers\BuyController@index');
+Route::get('/','App\Http\Controllers\BuyController@index');
 Route::get('payment/{id}','App\Http\Controllers\BuyController@payment');
 
 // Route::get('ticket2/','App\Http\Controllers\BuyController@dummy');
@@ -28,3 +28,9 @@ Route::post('/logout', 'App\Http\Controllers\Admin\LoginController@logout');
 
 Route::get('/dashboard', 'App\Http\Controllers\Admin\DashboardController@index');
 Route::get('/invoices', 'App\Http\Controllers\Invoices@index');
+Route::get('/terms', 'App\Http\Controllers\AboutController@term');
+Route::get('/privacy', 'App\Http\Controllers\AboutController@privacy');
+
+
+
+Route::get('/kirimemail','App\Http\Controllers\API\NotificationController@sendInvoice');

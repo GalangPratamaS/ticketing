@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Models\Orders;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailSender;
+use App\Models\Order_items;
 
 class NotificationController extends Controller
 {
@@ -15,27 +18,32 @@ class NotificationController extends Controller
     {
             try {
             $notification_body = json_decode($request->getContent(), true);
-            $invoice = $notification_body['order_code'];
+            $invoice = $notification_body['order_id'];
             $transaction_id = $notification_body['transaction_id'];
             $status_code = $notification_body['status_code'];
+            $payment_type = $notification_body['payment_type'];
+
             $order = Orders::where('order_code', $invoice)->where('transaction_id', $transaction_id)->first();
             if (!$order)
-                return ['code' => 0, 'messgae' => 'Terjadi kesalahan | Pembayaran tidak valid'];
+                return ['code' => 0, 'message' => 'Terjadi kesalahan | Pembayaran tidak valid'];
             switch ($status_code) {
                             case '200':
-                                $order->status = "SUCCESS";
+                                $order->payment_status = "SUCCESS";
+                                $this->sendInvoice($invoice);
                                 break;
                             case '201':
-                                $order->status = "PENDING";
+                                $order->payment_status = "PENDING";
                                 break;
                             case '202':
-                                $order->status = "CANCEL";
+                                $order->payment_status = "CANCEL";
                                 break;
                         }
+           
+
             $order->save();
                         return response('Ok', 200)->header('Content-Type', 'text/plain');
                     } catch (\Exception $e) {
-                        return response('Error', 404)->header('Content-Type', 'text/plain');
+                        return response('Error', 201)->header('Content-Type', 'text/plain');
                     }
     
     }
@@ -98,5 +106,29 @@ class NotificationController extends Controller
 
     // $update_trx = MTransaksiDetailAkademik::where('kode_transaksi_detail', $data['order_id'])
     // ->update(['status' => $status, 'bank' => $bank, 'virtual_account' => $virtual_account]);
+  }
+
+  public function sendInvoice($order_id)
+  {
+    // Mail::to()    
+    // $order_id = "RHD-F5YO-WYEO";
+    // $order = Orders::findOrFail($id);
+    $order = Orders::where('order_code','=',$order_id)->first();
+    $order_items = Order_items::where('order_codes','=',$order_id)->get();
+    // dd($order);
+
+    Mail::to($order->customer_email)->queue(new EmailSender($order,$order_items));
+
+    // $to = $order->customer_email;
+    // $from = 'ticketing@pekanrayakarawang.co.id';
+    // $subject = 'Tanda Terima Tiket Pekan Raya Karawang';
+
+    // Mail::send('email.invoices', compact('order','order_items'), function ($message) use ($to,$from,$subject) {
+    //             $message->from($from)
+    //                     ->to($to)
+    //                     ->subject($subject);
+
+    //         });
+		return true;
   }
 }

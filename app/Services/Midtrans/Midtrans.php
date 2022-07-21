@@ -1,7 +1,7 @@
 <?php 
 namespace App\Services\Midtrans;
 
-use Midtrans\config;
+use Midtrans\Config;
 
 class Midtrans {
     protected $serverKey;
