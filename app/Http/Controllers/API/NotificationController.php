@@ -22,10 +22,36 @@ class NotificationController extends Controller
             $transaction_id = $notification_body['transaction_id'];
             $status_code = $notification_body['status_code'];
             $payment_type = $notification_body['payment_type'];
+            $va_number = "";
+            $bank = "";
 
-            $order = Orders::where('order_code', $invoice)->where('transaction_id', $transaction_id)->first();
+            $order = Orders::where('order_code', $invoice)->first();
             if (!$order)
                 return ['code' => 0, 'message' => 'Terjadi kesalahan | Pembayaran tidak valid'];
+
+            if($payment_type == "bank_transfer") {
+              
+              if (isset($notification_body["va_numbers"])) {
+              // BCA, BNI, BRI
+              $bank = strtoupper($notification_body["va_numbers"][0]["bank"]);
+              $virtual_account = $notification_body["va_numbers"][0]["va_number"];
+              } else if (isset($notification_body["permata_va_number"])) {
+              // Bank Permata
+              $bank = "Bank Permata";
+              $virtual_account = $notification_body["permata_va_number"];
+              } else {
+              // Bank Mandiri
+              $bank = "Bank Mandiri";
+              $virtual_account = $notification_body["bill_key"];
+              }
+
+            } else if($payment_type == "credit_card") {
+
+            } else if($payment_type == "gopay") {
+
+            }
+            $order->payment_method = $payment_type;
+            
             switch ($status_code) {
                             case '200':
                                 $order->payment_status = "SUCCESS";

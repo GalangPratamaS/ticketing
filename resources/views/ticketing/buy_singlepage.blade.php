@@ -139,7 +139,7 @@
                       <div class="form-check">
                         <input class="form-check-input" name="cust_agree" type="checkbox" value="1" id="gridCheck" required>
                         <label class="form-check-label" for="gridCheck">
-                          Saya setuju terhadap <a href="{{ url('terms') }}">Syarat dan Ketentuan</a>  tiketing dan <a href="{{ url('privacy') }}">Kebijakan Privasi</a> tiketing
+                          Saya setuju terhadap <a href="{{ url('terms') }}" target="_blank"> Syarat dan Ketentuan</a>  tiketing dan <a href="{{ url('privacy') }}" target="_blank">Kebijakan Privasi</a> tiketing
                         </label>
                       </div>
                     </div>                   
